@@ -1,0 +1,6 @@
+React-native material-ui
+https://github.com/xotahal/react-native-material-ui/blob/master/docs/GettingStarted.md
+React-native fab
+https://github.com/mastermoo/react-native-action-button
+React-native Tesseract-ocr
+https://github.com/jonathanpalma/react-native-tesseract-ocr
