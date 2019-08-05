@@ -24,7 +24,7 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import Main from "./src/components/Main"
+import Main from "./src/activities/Main"
 
 const App = () => {
   return (
