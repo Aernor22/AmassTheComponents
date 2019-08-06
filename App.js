@@ -15,7 +15,7 @@ import {
   Text,
   StatusBar,
 } from 'react-native';
-
+import { StackNavigator } from 'react-navigation';
 import {
   Header,
   LearnMoreLinks,

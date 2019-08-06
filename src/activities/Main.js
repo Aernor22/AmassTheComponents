@@ -2,7 +2,8 @@ import ActionButton from 'react-native-action-button';
 import React, { Component } from 'react';
 import Icon from 'react-native-vector-icons/AntDesign';
 import {
-    View
+    View,
+    StyleSheet
   } from 'react-native';
 
 class Main extends Component {
@@ -12,9 +13,9 @@ class Main extends Component {
     render() {
         return (
             <View>
-                <ActionButton style={styles.actionButtonIcon} icon={<Icon name="export2"/>}/>
-                <ActionButton style={styles.actionButtonIcon} icon={<Icon name="camerao"/>} offsetY={30}/>
-                <ActionButton style={styles.actionButtonIcon} icon={<Icon name="eyeo"/>}/>
+                <ActionButton position="left" icon={<Icon name="export2" style={styles.actionButtonIcon}/>}/>
+                <ActionButton position="center" icon={<Icon name="camerao" style={styles.actionButtonIcon}/>} offsetY={80}/>
+                <ActionButton position="right" icon={<Icon name="eyeo" style={styles.actionButtonIcon}/>}/>
             </View>
         );
     }
