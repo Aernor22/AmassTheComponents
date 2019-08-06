@@ -6,10 +6,7 @@
  * @flow
  */
 
-import React, {Fragment} from 'react';
-import {
-  StatusBar,
-} from 'react-native';
+import React from 'react';
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import Main from "./src/activities/Main";
 import Camera from "./src/activities/Camera";
@@ -17,16 +14,15 @@ import Camera from "./src/activities/Camera";
 const AppNavigator = createStackNavigator({
   Home: Main,
   Camera: Camera
-  
+},
+{
+  initialRouteName: "Home"
 });
 const AppContainer = createAppContainer(AppNavigator);
 
 const App = () => {
   return (
-    <Fragment>
-      <StatusBar barStyle="dark-content" />
       <AppContainer/>
-    </Fragment>
   );
 };
 export default App;

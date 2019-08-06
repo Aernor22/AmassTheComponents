@@ -5,7 +5,6 @@ import {
     View,
     StyleSheet
   } from 'react-native';
-
 class Main extends Component {
     state = { 
 
@@ -13,8 +12,13 @@ class Main extends Component {
     render() {
         return (
             <View>
-                <ActionButton position="left" icon={<Icon name="export2" style={styles.actionButtonIcon}/>}/>
-                <ActionButton position="center" icon={<Icon name="camerao" style={styles.actionButtonIcon}/>} offsetY={80}/>
+                <ActionButton onPress={() => { console.log("hi")}} position="left" icon={<Icon name="export2" style={styles.actionButtonIcon}/>}/>
+                <ActionButton 
+                  position="center" 
+                  icon={<Icon name="camerao" style={styles.actionButtonIcon}/>} 
+                  offsetY={80}                   
+                  onPress={() => { console.log("bye")}}
+                  />
                 <ActionButton position="right" icon={<Icon name="eyeo" style={styles.actionButtonIcon}/>}/>
             </View>
         );
