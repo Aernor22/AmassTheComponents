@@ -6,3 +6,4 @@ React-native Tesseract-ocr
 https://github.com/jonathanpalma/react-native-tesseract-ocr
 React-Native-camera
 https://react-native-community.github.io/react-native-camera/docs/installation.html
+https://blog.rocketseat.com.br/react-native-camera/
