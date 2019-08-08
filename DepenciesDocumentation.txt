@@ -7,3 +7,4 @@ https://github.com/jonathanpalma/react-native-tesseract-ocr
 React-Native-camera
 https://react-native-community.github.io/react-native-camera/docs/installation.html
 https://blog.rocketseat.com.br/react-native-camera/
+https://github.com/zsajjad/BusinessCard/blob/master/app/App.js
