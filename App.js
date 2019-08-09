@@ -6,23 +6,27 @@
  * @flow
  */
 
-import React from 'react';
+import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import Main from "./src/activities/Main";
 import Camera from "./src/activities/Camera";
 
-const AppNavigator = createStackNavigator({
-  Home: Main,
-  Camera: Camera
-},
-{
-  initialRouteName: "Home"
-});
+const AppNavigator = createStackNavigator(
+  {
+    Home: Main,
+    Camera: Camera
+  },
+  {
+    defaultNavigationOptions: {
+      header: null
+    },
+    initialRouteName: "Home",
+    headerMode: "screen"
+  }
+);
 const AppContainer = createAppContainer(AppNavigator);
 
 const App = () => {
-  return (
-      <AppContainer/>
-  );
+  return <AppContainer />;
 };
 export default App;
