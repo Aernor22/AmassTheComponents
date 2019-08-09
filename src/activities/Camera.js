@@ -7,14 +7,11 @@ import RNTesseractOcr from "react-native-tesseract-ocr";
 import { View,StyleSheet,TouchableOpacity,Text } from "react-native";
 
 const PICTURE_OPTIONS = {
-  quality: 1,
   fixOrientation: true,
   forceUpOrientation: true,
-  quality: 0.5, base64: true
+  quality: 0.5,
 };
 const tessOptions = {
-  whitelist: null,
-  blacklist: null
 };
 
 export default class Camera extends Component {
@@ -22,13 +19,15 @@ export default class Camera extends Component {
     loading: false,
     image: null,
     error: null,
-    visionResp: []
+    hasError:false,
+    errorMessage: null,
+    extractedText: null
   };
 
   render() {
     return (
       <HandleBack>
-        <View style={{ flex: 1 }}>
+        <View style={styles.container}>
           <RNCamera
             ref={camera => {
               this.camera = camera;
@@ -67,9 +66,9 @@ export default class Camera extends Component {
             image: data.uri
           },
           () => {
-            console.log(data.uri);
             alert(data.uri);
-            //this.processImageMagic(data.uri);
+            path = data.uri.replace('file://', '')
+            this.processImageMagic(path);
           }
         );
       } catch (e) {
@@ -91,21 +90,27 @@ export default class Camera extends Component {
       }
     );
   }
-
+//LANG_CUSTOM
   processImageMagic = async uri => {
-    RNTesseractOcr.recognize(uri, "LANG_CUSTOM", tessOptions)
+    console.log("processing");
+    RNTesseractOcr.recognize(uri, "LANG_ENGLISH", tessOptions)
       .then(result => {
+        console.log("on result");
         this.setState({
           isLoading: false,
           extractedText: result
         });
+        console.log(this.state.extractedText);
+        alert(this.state.extractedText);
       })
       .catch(err => {
+        console.log("On error");
         this.setState({
           hasErrored: true,
           errorMessage: err.message
         });
-        throw "FAILED TO DETECT";
+        console.log(this.state.errorMessage);
+        alert(this.state.errorMessage);
       });
   };
 }
