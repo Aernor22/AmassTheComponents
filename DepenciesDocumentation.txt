@@ -8,3 +8,4 @@ React-Native-camera
 https://react-native-community.github.io/react-native-camera/docs/installation.html
 https://blog.rocketseat.com.br/react-native-camera/
 https://github.com/zsajjad/BusinessCard/blob/master/app/App.js
+https://github.com/archriss/react-native-snap-carousel
