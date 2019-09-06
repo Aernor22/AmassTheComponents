@@ -20,7 +20,7 @@ export default class ModalLanguage extends Component {
     _renderItem({ item, index }) {
         return (
             <View>
-                <Text>{item.title}</Text>
+                <Text>{item}</Text>
             </View>
         );
     }
@@ -36,22 +36,25 @@ export default class ModalLanguage extends Component {
                         flexDirection: 'column',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        backgroundColor:'#00000080'
+                        backgroundColor: '#00000080'
                     }}>
                         <View style={{
                             width: Dimensions.get('window').width * 0.5,
-                            height: Dimensions.get('window').height * 0.5,
-                            backgroundColor: '#fff', padding: 20
+                            height: Dimensions.get('window').height * 0.2,
+                            backgroundColor: '#fff', padding: 20,
+                            borderRadius: 70
                         }}>
                             <Text> Text recognized! Please select a language: </Text>
-                            <Carousel
-                                ref={(c) => { this._carousel = c; }}
-                                data={this.state.entries}
-                                renderItem={this._renderItem}
-                                sliderWidth={60}
-                                itemWidth={40}
-                                layout={'default'}
-                            />
+                            <View style={{paddingTop:20}}>
+                                <Carousel
+                                    ref={(c) => { this._carousel = c; }}
+                                    data={this.state.entries}
+                                    renderItem={this._renderItem}
+                                    sliderWidth={(Dimensions.get('window').width * 0.5) - 20}
+                                    itemWidth={90}
+                                    layout={'default'}
+                                />
+                            </View>
                         </View>
                     </View>
                 </Modal>
