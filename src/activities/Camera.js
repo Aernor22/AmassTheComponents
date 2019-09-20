@@ -2,9 +2,11 @@
 /* eslint-disable quotes */
 import React, { Component } from "react";
 import { RNCamera } from "react-native-camera";
-import api from "../layers/OCRLayer";
+import ocrApi from "../layers/OCRLayer";
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions, ActivityIndicator } from "react-native";
 import ModalLanguage from "../components/ModalLanguage";
+import mtgApi from "../layers/MtgApiLayer";
+
 
 export default class Camera extends Component {
   state = {
@@ -15,6 +17,10 @@ export default class Camera extends Component {
     errorMessage: null,
     extractedText: null,
     loadingVisible: false,
+    modalVisible: false,
+    cardName:"",
+    language:"",
+    message:"Recognizing Text"
   };
 
   render() {
@@ -48,9 +54,14 @@ export default class Camera extends Component {
           {this.state.loadingVisible &&
             <View style={styles.loading}>
               <ActivityIndicator size="large" color="#0000ff" animating={this.state.loadingVisible} />
+              <Text style={{color: 'white'}}>{this.state.message}</Text>
             </View>
           }
-          <ModalLanguage style={styles.loading}/>
+          <ModalLanguage  
+            visible={this.state.modalVisible} 
+            cardName={this.state.cardName}
+            processImage = {this.processImage} 
+            closeModal={this.closeModal}/>
           <View style={styles.maskOutter}>
             <View style={[{ flex: maskRowHeight }, styles.maskRow, styles.maskFrame]} />
             <View style={[{ flex: 30 }, styles.maskCenter]}>
@@ -71,89 +82,49 @@ export default class Camera extends Component {
   }
 
   takePicture = async () => {
-    this.setState({ loadingVisible: true });
-    if (this.camera) {
-      const options = { quality: 0.5, base64: true };
-      const data = await this.camera.takePictureAsync(options);
-      //var path = data.uri.replace('file://', '');
-      var bodyFormData = new FormData();
-      bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
-      bodyFormData.append('isOverlayRequired', true);
-      bodyFormData.append('OCREngine', 2);
-      bodyFormData.append('scale', true);
-      var response = await api.post('/image', bodyFormData);
-      this.setState({ loadingVisible: false });
-      console.log(response.data);
-      alert(response.data.ParsedResults[0].ParsedText);
-      //.then(()=>{console.log(response.data);alert(response.data);});
-    }
+    this.setState({ cardName: "Brontodonte Destruidor" , modalVisible: true });
+    // this.setState({ loadingVisible: true });
+    // if (this.camera) {
+    //   const options = { quality: 0.5, base64: true };
+    //   const data = await this.camera.takePictureAsync(options);
+    //   var bodyFormData = new FormData();
+    //   bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
+    //   bodyFormData.append('isOverlayRequired', true);
+    //   bodyFormData.append('OCREngine', 2);
+    //   bodyFormData.append('scale', true);
+    //   var response = await ocrApi.post('/image', bodyFormData);
+    //   if(response.data.OCRExitCode == "1"||response.data.OCRExitCode == "2"){
+    //     this.setState({cardName: response.data.ParsedResults[0].TextOverlay.Lines[0].LineText});
+    //     this.setState({modalVisible:true});
+    //   }
+    //   this.setState({ loadingVisible: false });
+    // }
   }
 
-
-
-  // takePicture = async () => {
-  //   this.setState({
-  //     loading: true
-  //   });
-  //   if (this.camera) {
-  //     const data = await this.camera.takePictureAsync(PICTURE_OPTIONS);
-  //     try {
-  //       if (!data.uri) {
-  //         throw "OTHER";
-  //       }
-  //       this.setState(
-  //         {
-  //           image: data.uri
-  //         },
-  //         () => {
-  //           alert(data.uri);
-  //           path = data.uri.replace('file://', '')
-  //          // this.processImageMagic(path);
-  //         }
-  //       );
-  //     } catch (e) {
-  //       console.warn(e);
-  //       this.reset(e);
-  //     }
-  //   }
-  // };
-
-  reset(error = "OTHER") {
-    this.setState(
-      {
-        loading: false,
-        image: null,
-        error
-      },
-      () => {
-        // setTimeout(() => this.camera.startPreview(), 500);
-      }
-    );
+  processImage = async (lg) =>{
+    console.log("process");
+    console.log(lg);
+    this.setState({modalVisible:false, loadingVisible:true, message:"Retrieving card information"});
+    console.log('/cards?name='+this.state.cardName+'&language='+lg);
+    var response = await mtgApi.get('/cards?name='+this.state.cardName+'&language='+lg);
+    console.log(response.data.cards[0]);
+    this.setState({loadingVisible:false});
   }
 
-  // processImageMagic = async uri => {
-  //   console.log("processing");
-  //   RNTesseractOcr.recognize(uri, "LANG_CUSTOM", tessOptions)
-  //     .then(result => {
-  //       console.log("on result");
-  //       this.setState({
-  //         isLoading: false,
-  //         extractedText: result
-  //       });
-  //       console.log(this.state.extractedText);
-  //       alert(this.state.extractedText);
-  //     })
-  //     .catch(err => {
-  //       console.log("On error");
-  //       this.setState({
-  //         hasErrored: true,
-  //         errorMessage: err.message
-  //       });
-  //       console.log(this.state.errorMessage);
-  //       alert(this.state.errorMessage);
-  //     });
-  // };
+  closeModal =()=>{
+    this.setState({modalVisible:false, loadingVisible:false});
+  }
+
+  getCardInformation= async (cardName, lg)=>{
+    await mtgApi.get('/cards?name='+cardName+'&language='+lg)
+    .then(function (response){return response.data})
+    .catch(function (error) {
+      return 'aaaaa';
+    });
+  }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
