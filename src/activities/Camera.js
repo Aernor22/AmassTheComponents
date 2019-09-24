@@ -6,7 +6,7 @@ import ocrApi from "../layers/OCRLayer";
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions, ActivityIndicator } from "react-native";
 import ModalLanguage from "../components/ModalLanguage";
 import mtgApi from "../layers/MtgApiLayer";
-
+import { AndroidBackHandler } from 'react-navigation-backhandler';
 
 export default class Camera extends Component {
   state = {
@@ -18,71 +18,79 @@ export default class Camera extends Component {
     extractedText: null,
     loadingVisible: false,
     modalVisible: false,
-    cardName:"",
-    language:"",
-    message:"Recognizing Text"
+    cardName: "",
+    language: "",
+    message: "Recognizing Text"
   };
+
+  onBackButtonPressAndroid = () => {
+    this.props.navigation.goBack();
+    return true;
+  };
+
 
   render() {
     const { height, width } = Dimensions.get('window');
     const maskRowHeight = Math.round((height - 570) / 20);
     const maskColWidth = (width - 250) / 2;
     return (
-      <View style={styles.container}>
-        <RNCamera
-          ref={camera => {
-            this.camera = camera;
-          }}
-          style={styles.preview}
-          type={RNCamera.Constants.Type.back}
-          autoFocus={RNCamera.Constants.AutoFocus.on}
-          flashMode={RNCamera.Constants.FlashMode.off}
-          clearWindowBackground={true}
-          androidCameraPermissionOptions={{
-            title: 'Permission to use camera',
-            message: 'We need your permission to use your camera',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-          androidRecordAudioPermissionOptions={{
-            title: 'Permission to use audio recording',
-            message: 'We need your permission to use your audio',
-            buttonPositive: 'Ok',
-            buttonNegative: 'Cancel',
-          }}
-        >
-          {this.state.loadingVisible &&
-            <View style={styles.loading}>
-              <ActivityIndicator size="large" color="#0000ff" animating={this.state.loadingVisible} />
-              <Text style={{color: 'white'}}>{this.state.message}</Text>
+      <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
+        <View style={styles.container}>
+          <RNCamera
+            ref={camera => {
+              this.camera = camera;
+            }}
+            style={styles.preview}
+            type={RNCamera.Constants.Type.back}
+            autoFocus={RNCamera.Constants.AutoFocus.on}
+            flashMode={RNCamera.Constants.FlashMode.off}
+            clearWindowBackground={true}
+            androidCameraPermissionOptions={{
+              title: 'Permission to use camera',
+              message: 'We need your permission to use your camera',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }}
+            androidRecordAudioPermissionOptions={{
+              title: 'Permission to use audio recording',
+              message: 'We need your permission to use your audio',
+              buttonPositive: 'Ok',
+              buttonNegative: 'Cancel',
+            }}
+          >
+            {this.state.loadingVisible &&
+              <View style={styles.loading}>
+                <ActivityIndicator size="large" color="#0000ff" animating={this.state.loadingVisible} />
+                <Text style={{ color: 'white' }}>{this.state.message}</Text>
+              </View>
+            }
+            <ModalLanguage
+              visible={this.state.modalVisible}
+              cardName={this.state.cardName}
+              processImage={this.processImage}
+              closeModal={this.closeModal} />
+            <View style={styles.maskOutter}>
+              <View style={[{ flex: maskRowHeight }, styles.maskRow, styles.maskFrame]} />
+              <View style={[{ flex: 30 }, styles.maskCenter]}>
+                <View style={[{ width: maskColWidth }, styles.maskFrame]} />
+                <View style={styles.maskInner} />
+                <View style={[{ width: maskColWidth }, styles.maskFrame]} />
+              </View>
+              <View style={[{ flex: maskRowHeight }, styles.maskRow, styles.maskFrame]} />
             </View>
-          }
-          <ModalLanguage  
-            visible={this.state.modalVisible} 
-            cardName={this.state.cardName}
-            processImage = {this.processImage} 
-            closeModal={this.closeModal}/>
-          <View style={styles.maskOutter}>
-            <View style={[{ flex: maskRowHeight }, styles.maskRow, styles.maskFrame]} />
-            <View style={[{ flex: 30 }, styles.maskCenter]}>
-              <View style={[{ width: maskColWidth }, styles.maskFrame]} />
-              <View style={styles.maskInner} />
-              <View style={[{ width: maskColWidth }, styles.maskFrame]} />
-            </View>
-            <View style={[{ flex: maskRowHeight }, styles.maskRow, styles.maskFrame]} />
+          </RNCamera>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={this.takePicture} style={styles.capture} disabled={this.state.loadingVisible}>
+              <Text style={styles.buttonText}> SNAP </Text>
+            </TouchableOpacity>
           </View>
-        </RNCamera>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={this.takePicture} style={styles.capture} disabled={this.state.loadingVisible}>
-            <Text style={styles.buttonText}> SNAP </Text>
-          </TouchableOpacity>
         </View>
-      </View>
+      </AndroidBackHandler>
     );
   }
 
   takePicture = async () => {
-    this.setState({ cardName: "Brontodonte Destruidor" , modalVisible: true });
+    this.setState({ cardName: "Brontodonte Destruidor", modalVisible: true });
     // this.setState({ loadingVisible: true });
     // if (this.camera) {
     //   const options = { quality: 0.5, base64: true };
@@ -101,26 +109,26 @@ export default class Camera extends Component {
     // }
   }
 
-  processImage = async (lg) =>{
+  processImage = async (lg) => {
     console.log("process");
     console.log(lg);
-    this.setState({modalVisible:false, loadingVisible:true, message:"Retrieving card information"});
-    console.log('/cards?name='+this.state.cardName+'&language='+lg);
-    var response = await mtgApi.get('/cards?name='+this.state.cardName+'&language='+lg);
+    this.setState({ modalVisible: false, loadingVisible: true, message: "Retrieving card information" });
+    console.log('/cards?name=' + this.state.cardName + '&language=' + lg);
+    var response = await mtgApi.get('/cards?name=' + this.state.cardName + '&language=' + lg);
     console.log(response.data.cards[0]);
-    this.setState({loadingVisible:false});
+    this.setState({ loadingVisible: false });
   }
 
-  closeModal =()=>{
-    this.setState({modalVisible:false, loadingVisible:false});
+  closeModal = () => {
+    this.setState({ modalVisible: false, loadingVisible: false });
   }
 
-  getCardInformation= async (cardName, lg)=>{
-    await mtgApi.get('/cards?name='+cardName+'&language='+lg)
-    .then(function (response){return response.data})
-    .catch(function (error) {
-      return 'aaaaa';
-    });
+  getCardInformation = async (cardName, lg) => {
+    await mtgApi.get('/cards?name=' + cardName + '&language=' + lg)
+      .then(function (response) { return response.data })
+      .catch(function (error) {
+        return 'aaaaa';
+      });
   }
 }
 

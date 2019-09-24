@@ -37,10 +37,6 @@ class Main extends Component {
   }
 }
 
-const sayHi = function() {
-  console.log("hi");
-};
-
 const styles = StyleSheet.create({
   actionButtonIcon: {
     fontSize: 20,
