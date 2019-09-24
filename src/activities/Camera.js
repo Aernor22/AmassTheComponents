@@ -7,6 +7,7 @@ import { View, StyleSheet, TouchableOpacity, Text, Dimensions, ActivityIndicator
 import ModalLanguage from "../components/ModalLanguage";
 import mtgApi from "../layers/MtgApiLayer";
 import { AndroidBackHandler } from 'react-navigation-backhandler';
+import ModalAddedCard from "../components/ModalAddedCard";
 
 export default class Camera extends Component {
   state = {
@@ -18,6 +19,7 @@ export default class Camera extends Component {
     extractedText: null,
     loadingVisible: false,
     modalVisible: false,
+    modalAddVisible: false,
     cardName: "",
     language: "",
     message: "Recognizing Text"
@@ -69,6 +71,12 @@ export default class Camera extends Component {
               cardName={this.state.cardName}
               processImage={this.processImage}
               closeModal={this.closeModal} />
+
+            <ModalAddedCard
+              visible={this.state.modalAddVisible}
+              cardName={this.state.cardName}
+              closeModal = {this.closeAdd}
+            />
             <View style={styles.maskOutter}>
               <View style={[{ flex: maskRowHeight }, styles.maskRow, styles.maskFrame]} />
               <View style={[{ flex: 30 }, styles.maskCenter]}>
@@ -90,7 +98,8 @@ export default class Camera extends Component {
   }
 
   takePicture = async () => {
-    this.setState({ cardName: "Brontodonte Destruidor", modalVisible: true });
+    this.setState({ cardName: "Brontodonte Destruidor", modalAddVisible: true });
+    //this.setState({ cardName: "Brontodonte Destruidor", modalVisible: true });
     // this.setState({ loadingVisible: true });
     // if (this.camera) {
     //   const options = { quality: 0.5, base64: true };
@@ -121,6 +130,10 @@ export default class Camera extends Component {
 
   closeModal = () => {
     this.setState({ modalVisible: false, loadingVisible: false });
+  }
+
+  closeAdd = () => {
+    this.setState({ modalAddVisible: false});
   }
 
   getCardInformation = async (cardName, lg) => {
