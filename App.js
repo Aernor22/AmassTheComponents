@@ -10,11 +10,13 @@ import React from "react";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import Main from "./src/activities/Main";
 import Camera from "./src/activities/Camera";
+import Collection from "./src/activities/Collection";
 
 const AppNavigator = createStackNavigator(
   {
     Home: Main,
-    Camera: Camera
+    Camera: Camera,
+    Collection:Collection,
   },
   {
     defaultNavigationOptions: {

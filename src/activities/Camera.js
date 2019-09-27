@@ -2,12 +2,14 @@
 /* eslint-disable quotes */
 import React, { Component } from "react";
 import { RNCamera } from "react-native-camera";
-import ocrApi from "../layers/OCRLayer";
 import { View, StyleSheet, TouchableOpacity, Text, Dimensions, ActivityIndicator } from "react-native";
-import ModalLanguage from "../components/ModalLanguage";
-import mtgApi from "../layers/MtgApiLayer";
 import { AndroidBackHandler } from 'react-navigation-backhandler';
+import ModalLanguage from "../components/ModalLanguage";
 import ModalAddedCard from "../components/ModalAddedCard";
+import mtgApi from "../layers/MtgApiLayer";
+import ocrApi from "../layers/OCRLayer";
+import {addCard} from "../layers/CRUDLayer"
+
 
 export default class Camera extends Component {
   state = {
@@ -70,7 +72,7 @@ export default class Camera extends Component {
               visible={this.state.modalVisible}
               cardName={this.state.cardName}
               processImage={this.processImage}
-              closeModal={this.closeModal} />
+              closeModal={this.closeModal}/>
 
             <ModalAddedCard
               visible={this.state.modalAddVisible}
@@ -98,8 +100,7 @@ export default class Camera extends Component {
   }
 
   takePicture = async () => {
-    this.setState({ cardName: "Brontodonte Destruidor", modalAddVisible: true });
-    //this.setState({ cardName: "Brontodonte Destruidor", modalVisible: true });
+    this.setState({cardName: "Damnation", modalVisible: true});
     // this.setState({ loadingVisible: true });
     // if (this.camera) {
     //   const options = { quality: 0.5, base64: true };
@@ -123,9 +124,15 @@ export default class Camera extends Component {
     console.log(lg);
     this.setState({ modalVisible: false, loadingVisible: true, message: "Retrieving card information" });
     console.log('/cards?name=' + this.state.cardName + '&language=' + lg);
-    var response = await mtgApi.get('/cards?name=' + this.state.cardName + '&language=' + lg);
-    console.log(response.data.cards[0]);
+    var hasData = false;
+    var response = await mtgApi.get('/cards?name=' + this.state.cardName + '&language=' + lg).then(hasData=true);
+    if(hasData){
+      console.log(hasData);
+      addCard(response.data.cards[0]);
+    }
     this.setState({ loadingVisible: false });
+    this.setState({modalAddVisible: true });
+    
   }
 
   closeModal = () => {

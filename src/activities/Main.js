@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
+import {removeAll} from "../layers/CRUDLayer"
 class Main extends Component {
   render() {
     return (
@@ -9,7 +10,7 @@ class Main extends Component {
         <TouchableOpacity
           style={[styles.FloatingButtonStyle,styles.leftFAB]}
           onPress={() => {
-            console.log("AAAAAA");
+            removeAll();
           }}
         >
           <Icon name="export2" style={styles.actionButtonIcon} />
@@ -18,7 +19,7 @@ class Main extends Component {
         <TouchableOpacity
           style={[styles.FloatingButtonStyle,styles.centerFAB]}
           onPress={() => {
-            this.props.navigation.push('Camera')
+            this.props.navigation.navigate('Camera');
           }}
         >
           <Icon name="camerao" style={styles.actionButtonIcon} />
@@ -27,7 +28,7 @@ class Main extends Component {
         <TouchableOpacity
           style={[styles.FloatingButtonStyle,styles.rightFAB]}
           onPress={() => {
-            console.log("AAAAAA");
+            this.props.navigation.navigate('Collection');
           }}
         >
           <Icon name="eyeo" style={styles.actionButtonIcon} />
