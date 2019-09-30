@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
 import { View, Button, StyleSheet, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
-import { removeCard, removeAllCopies } from "../layers/CRUDLayer";
+import { removeCard, removeAllCopies, retrieveAll } from "../layers/CRUDLayer";
 export default class ModalInfo extends Component {
+
+    async deleteAndRetrieve() {
+        removeCard(this.props.cardId);
+        await retrieveAll().then((response) => this.props.refresh(response))
+          .catch(function (error) {
+            console.log(error);
+          });
+    }
 
     render() {
         return (
@@ -22,12 +30,12 @@ export default class ModalInfo extends Component {
                                 width: Dimensions.get('window').width * 0.6,
                                 height: Dimensions.get('window').height * 0.35,
                                 backgroundColor: '#fff', padding: 20,
-                                borderRadius: 40, 
+                                borderRadius: 40,
                                 flexDirection: 'column',
                                 justifyContent: 'space-evenly',
                             }}>
-                                <Button onPress={async () => {removeCard(this.props.cardId); await this.props.refresh();}} title="Remove 1" />
-                                <Button onPress={async () => {removeAllCopies(this.props.cardId); await this.props.refresh();}} title="Remove All" />
+                                <Button onPress={async () => { }} title="Remove 1" />
+                                <Button onPress={async () => { removeAllCopies(this.props.cardId); await this.props.refresh(); }} title="Remove All" />
                             </View>
                         </TouchableWithoutFeedback>
                     </TouchableOpacity>

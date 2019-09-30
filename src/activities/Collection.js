@@ -6,7 +6,7 @@ import { AndroidBackHandler } from 'react-navigation-backhandler'
 import ModalInfo from '../components/ModalInfo';
 
 export default class Collection extends Component {
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state = {
             text: '',
@@ -23,22 +23,16 @@ export default class Collection extends Component {
         addCard({ name: text });
     }
 
-    async refresh() {
-        await retrieveAll().then((response) =>{
-            console.log('response');
-            console.log(response); 
-            this.setState({ list: response });
-          })
+    refresh(list) {
+        console.log(list);
+        this.setState({ list });
+    }
+
+    async componentDidMount() {
+        await retrieveAll().then((response) => this.refresh(response))
           .catch(function (error) {
             console.log(error);
           });
-        
-        console.log("Lista after reload");
-        console.log(this.state.list);
-    }
-
-    componentDidMount() {
-        this.refresh();
     }
 
     onBackButtonPressAndroid = () => {
@@ -46,12 +40,12 @@ export default class Collection extends Component {
         return true;
     };
 
-    openModal(cardId){
-        this.setState({cardId,modalVisible:true});
+    openModal(cardId) {
+        this.setState({ cardId, modalVisible: true });
     }
 
     closeModal = () => {
-        this.setState({ modalVisible: false});
+        this.setState({ modalVisible: false });
     }
 
 
@@ -62,8 +56,8 @@ export default class Collection extends Component {
                     <Text> Insert </Text>
                     <TextInput onChangeText={(text) => this.setState({ text })}></TextInput>
                     <Button title='Save' onPress={() => this.handleAdd(this.state.text)}></Button>
-                    <ModalInfo visible = {this.state.modalVisible} closeModal={this.closeModal} cardId = {this.state.cardId} refresh={this.refresh}/>
-                    <List list={this.state.list} openModal = {this.openModal}/>
+                    <ModalInfo visible={this.state.modalVisible} closeModal={this.closeModal} cardId={this.state.cardId} refresh={this.refresh} />
+                    <List list={this.state.list} openModal={this.openModal} />
                 </View>
             </AndroidBackHandler>
         )
