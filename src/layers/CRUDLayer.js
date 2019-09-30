@@ -1,34 +1,24 @@
 var Datastore = require('react-native-local-mongodb');
 var db = new Datastore({ filename: 'asyncStorageKey', autoload: true });
 
-    export async function addCard (cardInfo){
+    export function addCard (cardInfo){
        console.log("Trying to store "+ cardInfo.name);
-       return await db.findOne({name : cardInfo.name}, function(err,doc){
-           var returned = false;
+       db.findOne({name : cardInfo.name}, function(err,doc){ //mudar para ID
             if(!doc){
-                returned = db.insert({...cardInfo, quantity : 1},function (err,newDoc) {
-                    if(newDoc) {
-                        console.log('inserted');
-                        return true;
-                    }
-
-                    if(err) return false;
+                db.insert({...cardInfo, quantity : 1},function (err,newDoc) {
+                    if(newDoc) console.log('inserted');
+                    if(err) console.log(err);
                 });
             }else{
-                returned = db.update({_id:doc._id}, {$set: {quantity: (doc.quantity+1)}},function (err,newDoc) {
-                    if(newDoc) {
-                        console.log('updated');
-                        return true;
-                    }
-
-                    if(err) return false;
+                db.update({_id:doc._id}, {$set: {quantity: (doc.quantity+1)}},function (err,newDoc) {
+                    if(newDoc) console.log('updated');
+                    if(err) console.log(err);
                 });
             }
-            return returned;
         });
     }
 
-    export  function retrieveCard (cardId){
+    export function retrieveCard (cardId){
         db.findOne({_id: cardId},function(err,doc){
             return doc;
         });

@@ -116,7 +116,7 @@ export default class Camera extends Component {
     //     this.setState({modalVisible:true});
     //   }
     //   this.setState({ loadingVisible: false });
-    // }
+    // } 
   }
 
   processImage = async (lg) => {
@@ -124,12 +124,19 @@ export default class Camera extends Component {
     console.log(lg);
     this.setState({ modalVisible: false, loadingVisible: true, message: "Retrieving card information" });
     console.log('/cards?name=' + this.state.cardName + '&language=' + lg);
-    var hasData = false;
-    var response = await mtgApi.get('/cards?name=' + this.state.cardName + '&language=' + lg).then(hasData=true);
-    if(hasData){
-      console.log(hasData);
-      addCard(response.data.cards[0]);
+    url = '/cards?name=' + this.state.cardName;
+    if(lg !== 'English'){
+      url = url + '&language=' + lg;
     }
+    await mtgApi.get(url).then(function (response) {
+      addCard(response.data.cards[0]);
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
+
+    //alert(response.data.cards[0].text);
+
     this.setState({ loadingVisible: false });
     this.setState({modalAddVisible: true });
     
