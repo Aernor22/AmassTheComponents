@@ -1,7 +1,7 @@
 
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet, TouchableOpacity} from "react-native";
 import {removeAll} from "../layers/CRUDLayer"
 class Main extends Component {
   render() {

@@ -135,11 +135,8 @@ export default class Camera extends Component {
       console.log(error);
     });
 
-    //alert(response.data.cards[0].text);
-
     this.setState({ loadingVisible: false });
-    this.setState({modalAddVisible: true });
-    
+    this.setState({modalAddVisible: true });    
   }
 
   closeModal = () => {

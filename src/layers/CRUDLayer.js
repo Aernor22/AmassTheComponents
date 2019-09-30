@@ -34,19 +34,23 @@ var db = new Datastore({ filename: 'asyncStorageKey', autoload: true });
         return list;
     }
 
-    export  function removeCard (cardId){
+    export function removeCard (cardId){
+        console.log("Trying to delete "+ cardId);
         db.findOne({_id: cardId},function(err,doc){
             if(doc){
+                console.log("found!");
                 if(doc.quantity>1){
+                    console.log("updated.");
                     db.update({_id:doc._id}, {$set: {quantity: (doc.quantity-1)}});
                 }else{
+                    console.log("full remove");
                     removeAllCopies(cardId);
                 }
             }
         });
     }
 
-    export  function removeAllCopies (cardId){
+    export function removeAllCopies (cardId){
         db.remove({_id: cardId},{});
     }
 

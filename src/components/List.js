@@ -1,13 +1,6 @@
-import React, { Component } from 'react'
-import { Text, View, FlatList,Button } from 'react-native'
-
-function Item({ title, qtd }) {
-    return (
-      <View>
-        <Text>{qtd} x {title}</Text>
-      </View>
-    );
-  }
+import React, { Component } from 'react';
+import { View, FlatList,Button } from 'react-native';
+import ListItem from "./ListItem";
 
 export default class List extends Component {
     render() {
@@ -15,10 +8,9 @@ export default class List extends Component {
             <View>
                 <FlatList 
                     data = {this.props.list}
-                    renderItem={({ item }) => <Item title={item.name} qtd = {item.quantity}/>}
+                    renderItem={({ item }) => <ListItem item = {item} openModal = {this.props.openModal}/>}
                     keyExtractor={item => item._id}
                     />
-                <Button title='Refresh' onPress={()=>{this.props.refresh()}}></Button>
             </View>
         )
     }
