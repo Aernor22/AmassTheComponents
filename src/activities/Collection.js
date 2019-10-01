@@ -24,15 +24,13 @@ export default class Collection extends Component {
     }
 
     refresh(list) {
+        console.log("refresh");
         console.log(list);
         this.setState({ list });
     }
 
     async componentDidMount() {
-        await retrieveAll().then((response) => this.refresh(response))
-          .catch(function (error) {
-            console.log(error);
-          });
+        this.refresh(await retrieveAll());
     }
 
     onBackButtonPressAndroid = () => {
