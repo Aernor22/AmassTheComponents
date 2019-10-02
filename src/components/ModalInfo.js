@@ -1,19 +1,18 @@
 import React, { Component } from 'react';
 import { View, Button, StyleSheet, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
-import { removeCard, retrieveAll } from "../layers/CRUDLayer";
+import { removeAllCopies, removeCard, retrieveAll } from "../layers/CRUDLayer";
 export default class ModalInfo extends Component {
 
     async delete() {
         await removeCard(this.props.cardId).then(
-            this.props.refresh(await retrieveAll())
+            setTimeout(async ()=>this.props.refresh(await retrieveAll()), 1)
         );
-        //console.log('on andUpdate');
-        //this.props.refresh(await retrieveAll()); 
     }
 
-    async andUpdate(){
-        console.log('on andUpdate');
-        this.props.refresh(await retrieveAll());
+    async deleteAll(){
+        await removeAllCopies(this.props.cardId).then(
+            setTimeout(async ()=>this.props.refresh(await retrieveAll()), 1)
+        );
     }
 
     render() {
@@ -40,7 +39,7 @@ export default class ModalInfo extends Component {
                                 justifyContent: 'space-evenly',
                             }}>
                                 <Button onPress={async ()=> await this.delete()} title="Remove 1" />
-                                <Button onPress={async () => { await this.andUpdate(); }} title="Remove All" />
+                                <Button onPress={async () => { await this.deleteAll(); }} title="Remove All" />
                             </View>
                         </TouchableWithoutFeedback>
                     </TouchableOpacity>

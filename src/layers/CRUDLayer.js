@@ -3,7 +3,7 @@ var db = new Datastore({ filename: 'asyncStorageKey', autoload: true });
 
     export function addCard (cardInfo){
        console.log("Trying to store "+ cardInfo.name);
-       db.findOne({name : cardInfo.name}, function(err,doc){ //mudar para ID
+       db.findOne({name : cardInfo.name}, function(err,doc){
             if(!doc){
                 db.insert({...cardInfo, quantity : 1},function (err,newDoc) {
                     if(newDoc) console.log('inserted');

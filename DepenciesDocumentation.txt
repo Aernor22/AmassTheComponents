@@ -12,3 +12,4 @@ https://github.com/archriss/react-native-snap-carousel
 https://aboutreact.com/example-of-sqlite-database-in-react-native/
 https://www.djamware.com/post/5caec76380aca754f7a9d1f1/react-native-tutorial-sqlite-offline-androidios-mobile-app
 https://www.npmjs.com/package/react-native-local-mongodb
+https://www.freecodecamp.org/news/how-to-build-a-react-native-flatlist-with-realtime-searching-ability-81ad100f6699/

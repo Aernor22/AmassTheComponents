@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Button } from 'react-native'
+import {View, StyleSheet } from 'react-native'
 import List from "../components/List"
 import { retrieveAll, addCard } from "../layers/CRUDLayer"
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import ModalInfo from '../components/ModalInfo';
+import Filter from '../components/Filter'
 
 export default class Collection extends Component {
     constructor(props) {
@@ -50,10 +51,8 @@ export default class Collection extends Component {
     render() {
         return (
             <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
-                <View>
-                    <Text> Insert </Text>
-                    <TextInput onChangeText={(text) => this.setState({ text })}></TextInput>
-                    <Button title='Save' onPress={() => this.handleAdd(this.state.text)}></Button>
+                <View  styles={styles.container}>
+                    <Filter styles={styles.filter}/>
                     <ModalInfo visible={this.state.modalVisible} closeModal={this.closeModal} cardId={this.state.cardId} refresh={this.refresh} />
                     <List list={this.state.list} openModal={this.openModal} />
                 </View>
@@ -61,3 +60,15 @@ export default class Collection extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: "row",
+    },
+    filter: {
+        color: 'black',
+        backgroundColor: "black",
+        height: 60,
+    }
+});
