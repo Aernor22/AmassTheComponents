@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React, { Component } from 'react';
-import { Text, View, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { Text, View, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity,StyleSheet } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 
 
@@ -23,7 +23,7 @@ export default class ModalLanguage extends Component {
 
     _renderItem({ item}) {
         return (
-            <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center', height: ((Dimensions.get('window').height * 0.1)) }}
+            <TouchableOpacity style={styles.itemView}
                 onPress={()=>this.handleOnClick(item.value)}>
                 <Text style={{ textAlign: 'center' }}>{item.name}</Text>
             </TouchableOpacity>
@@ -43,20 +43,9 @@ export default class ModalLanguage extends Component {
                     visible={this.props.visible}     
                     animationType="slide"
                     transparent={true}>
-                        <TouchableOpacity key="overlay" testID="overlay" style={{
-                            flex: 1,
-                            flexDirection: 'column',
-                            justifyContent: 'center',
-                            alignItems: 'center',
-                            backgroundColor: '#00000080'                            
-                        }} onPress={this.props.closeModal}>
+                        <TouchableOpacity key="overlay" testID="overlay" style={styles.overlay} onPress={this.props.closeModal}>
                              <TouchableWithoutFeedback>
-                            <View style={{
-                                width: Dimensions.get('window').width * 0.6,
-                                height: Dimensions.get('window').height * 0.35,
-                                backgroundColor: '#fff', padding: 20,
-                                borderRadius: 40
-                            }}>
+                            <View style={styles.modal}>
                                 <Text style={{ textAlign: 'center', paddingBottom: 15 }}> {this.props.cardName} recognized! Please select what language this is: </Text>
                                 <View style={{ paddingTop: 10 }}>
                                     <Carousel
@@ -78,3 +67,36 @@ export default class ModalLanguage extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1
+    },
+    itemView:{
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: ((Dimensions.get('window').height * 0.1))
+    },
+    overlay:{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#00000080'
+    },
+    modal:{
+        width: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').height * 0.35,
+        backgroundColor: '#fff', padding: 20,
+        borderRadius: 40,
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+    },
+    categoria: {
+        width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').height * 0.1,
+        borderColor: '#000000',
+        borderWidth: 1,
+        borderRadius: 40,
+    }
+});

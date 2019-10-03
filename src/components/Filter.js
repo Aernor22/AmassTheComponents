@@ -1,7 +1,7 @@
 import Icon from "react-native-vector-icons/AntDesign";
 import { Toolbar } from 'react-native-material-ui';
 import React, { Component } from 'react';
-import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, TouchableOpacity,Text } from 'react-native';
 
 export default class Filter extends Component {
     state = {
@@ -13,12 +13,16 @@ export default class Filter extends Component {
         return (
             <View styles={styles.container}>
                 <Toolbar
+                    leftElement={<Text style={styles.actionButtonIcon}>Collection</Text>}
                     searchable={{
                         autoFocus: true,
                         placeholder: 'Search',
+                        autoCorrect: false ,
+                        onChangeText: (text) => this.props.searchFilterFunction(text),
+                        onSearchClosed: ()=> this.props.searchFilterFunction()
                     }}
                     rightElement={
-                        <TouchableOpacity style={styles.filterStyle} onPress={()=>console.log(" AAA")}>
+                        <TouchableOpacity style={styles.filterStyle} onPress={() => this.props.openModal()}>
                             <Icon name="filter" style={styles.actionButtonIcon} />
                         </TouchableOpacity>
                     }

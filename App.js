@@ -11,12 +11,14 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import Main from "./src/activities/Main";
 import Camera from "./src/activities/Camera";
 import Collection from "./src/activities/Collection";
+import ModalConfirm from "./src/components/ModalConfirm";
 
 const AppNavigator = createStackNavigator(
   {
     Home: Main,
     Camera: Camera,
     Collection:Collection,
+    AddCard: ModalConfirm
   },
   {
     defaultNavigationOptions: {

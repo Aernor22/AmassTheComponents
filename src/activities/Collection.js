@@ -4,6 +4,7 @@ import List from "../components/List"
 import { retrieveAll, addCard } from "../layers/CRUDLayer"
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import ModalInfo from '../components/ModalInfo';
+import ModalFilter from '../components/ModalFilter';
 import Filter from '../components/Filter'
 
 export default class Collection extends Component {
@@ -11,13 +12,16 @@ export default class Collection extends Component {
         super(props);
         this.state = {
             text: '',
+            listHolder: [],
             list: [],
             cardId: '',
-            modalVisible: false
+            modalInfoVisible: false,
+            modalFilterVisible: false
         };
 
         this.refresh = this.refresh.bind(this);
-        this.openModal = this.openModal.bind(this);
+        this.openInfoModal = this.openInfoModal.bind(this);
+        this.openFilterModal = this.openFilterModal.bind(this);
     }
 
     handleAdd(text) {
@@ -30,6 +34,21 @@ export default class Collection extends Component {
         this.setState({ list });
     }
 
+    searchFilterFunction = async (text) => {
+        console.log("screech "+ text);
+        if(text){
+            const newData = this.state.list.filter(item => {
+                if(item.name.toUpperCase().includes(text.toUpperCase())){
+                    return item;
+                }
+            });
+
+            this.refresh(newData);
+        }else{
+            this.refresh(await retrieveAll());    
+        }
+    };
+
     async componentDidMount() {
         this.refresh(await retrieveAll());
     }
@@ -39,22 +58,30 @@ export default class Collection extends Component {
         return true;
     };
 
-    openModal(cardId) {
-        this.setState({ cardId, modalVisible: true });
+    openInfoModal(cardId) {
+        this.setState({ cardId, modalInfoVisible: true });
     }
 
-    closeModal = () => {
-        this.setState({ modalVisible: false });
+    openFilterModal(cardId) {
+        this.setState({ cardId, modalFilterVisible: true });
     }
 
+    closeInfoModal = () => {
+        this.setState({ modalInfoVisible: false });
+    }
+
+    closeFilterModal = () => {
+        this.setState({ modalFilterVisible: false });
+    }
 
     render() {
         return (
             <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
-                <View  styles={styles.container}>
-                    <Filter styles={styles.filter}/>
-                    <ModalInfo visible={this.state.modalVisible} closeModal={this.closeModal} cardId={this.state.cardId} refresh={this.refresh} />
-                    <List list={this.state.list} openModal={this.openModal} />
+                <View  styles={styles.container}> 
+                    <Filter styles={styles.filter} searchFilterFunction={this.searchFilterFunction} openModal={this.openFilterModal}/>
+                    <ModalFilter visible={this.state.modalFilterVisible} closeModal={this.closeFilterModal} refresh={this.refresh}/>
+                    <ModalInfo visible={this.state.modalInfoVisible} closeModal={this.closeInfoModal} cardId={this.state.cardId} refresh={this.refresh} />
+                    <List list={this.state.list} openModal={this.openInfoModal} />
                 </View>
             </AndroidBackHandler>
         )

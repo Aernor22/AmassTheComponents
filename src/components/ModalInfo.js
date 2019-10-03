@@ -22,24 +22,11 @@ export default class ModalInfo extends Component {
                     visible={this.props.visible}
                     animationType="slide"
                     transparent={true}>
-                    <TouchableOpacity key="overlay" style={{
-                        flex: 1,
-                        flexDirection: 'column',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                        backgroundColor: '#00000080'
-                    }} onPress={this.props.closeModal}>
+                    <TouchableOpacity key="overlay" style={styles.overlay} onPress={this.props.closeModal}>
                         <TouchableWithoutFeedback>
-                            <View style={{
-                                width: Dimensions.get('window').width * 0.6,
-                                height: Dimensions.get('window').height * 0.35,
-                                backgroundColor: '#fff', padding: 20,
-                                borderRadius: 40,
-                                flexDirection: 'column',
-                                justifyContent: 'space-evenly',
-                            }}>
+                            <View style={styles.modal}>
                                 <Button onPress={async ()=> await this.delete()} title="Remove 1" />
-                                <Button onPress={async () => { await this.deleteAll(); }} title="Remove All" />
+                                <Button onPress={async () => await this.deleteAll()} title="Remove All" />
                             </View>
                         </TouchableWithoutFeedback>
                     </TouchableOpacity>
@@ -52,6 +39,28 @@ export default class ModalInfo extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1
+    },
+    overlay:{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#00000080'
+    },
+    modal:{
+        width: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').height * 0.35,
+        backgroundColor: '#fff', padding: 20,
+        borderRadius: 40,
+        flexDirection: 'column',
+        justifyContent: 'space-evenly',
+    },
+    categoria: {
+        width: Dimensions.get('window').width * 0.5,
+        height: Dimensions.get('window').height * 0.1,
+        borderColor: '#000000',
+        borderWidth: 1,
+        borderRadius: 40,
     }
 });
 

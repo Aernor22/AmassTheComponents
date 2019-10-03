@@ -10,7 +10,7 @@ class Main extends Component {
         <TouchableOpacity
           style={[styles.FloatingButtonStyle,styles.leftFAB]}
           onPress={() => {
-            removeAll();
+            this.props.navigation.navigate('AddCard');
           }}
         >
           <Icon name="export2" style={styles.actionButtonIcon} />
