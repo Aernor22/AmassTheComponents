@@ -9,7 +9,7 @@ import ModalAddedCard from "../components/ModalAddedCard";
 import mtgApi from "../layers/MtgApiLayer";
 import ocrApi from "../layers/OCRLayer";
 import {addCard} from "../layers/CRUDLayer"
-
+import RNFS from 'react-native-fs';
 
 export default class Camera extends Component {
   state = {
@@ -100,23 +100,30 @@ export default class Camera extends Component {
   }
 
   takePicture = async () => {
-    this.setState({cardName: "Damnation", modalVisible: true});
-    // this.setState({ loadingVisible: true });
-    // if (this.camera) {
-    //   const options = { quality: 0.5, base64: true };
-    //   const data = await this.camera.takePictureAsync(options);
-    //   var bodyFormData = new FormData();
-    //   bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
-    //   bodyFormData.append('isOverlayRequired', true);
-    //   bodyFormData.append('OCREngine', 2);
-    //   bodyFormData.append('scale', true);
-    //   var response = await ocrApi.post('/image', bodyFormData);
-    //   if(response.data.OCRExitCode == "1"||response.data.OCRExitCode == "2"){
-    //     this.setState({cardName: response.data.ParsedResults[0].TextOverlay.Lines[0].LineText});
-    //     this.setState({modalVisible:true});
-    //   }
-    //   this.setState({ loadingVisible: false });
-    // } 
+    //this.setState({cardName: "Damnation", modalVisible: true});
+    this.setState({ loadingVisible: true });
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true};
+      const data = await this.camera.takePictureAsync(options);
+      var bodyFormData = new FormData();
+      //bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
+      var imageFile = await RNFS.readFile(data.uri, 'base64');
+      bodyFormData.append('image', imageFile);
+      bodyFormData.append('isOverlayRequired', true);
+      bodyFormData.append('OCREngine', 2);
+      bodyFormData.append('scale', true);
+      var response = await ocrApi.post('/image', bodyFormData,{
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+      if(response.data.OCRExitCode == "1"||response.data.OCRExitCode == "2"){
+        this.setState({cardName: response.data.ParsedResults[0].TextOverlay.Lines[0].LineText});
+        this.setState({modalVisible:true});
+      }
+      RNFS.unlink(data.uri); // Remove image from cache
+      this.setState({ loadingVisible: false });
+    } 
   }
 
   processImage = async (lg) => {
