@@ -1,4 +1,4 @@
-import Icon from "react-native-vector-icons/AntDesign";
+import Icon from "react-native-vector-icons/MaterialIcons";
 import { Toolbar } from 'react-native-material-ui';
 import React, { Component } from 'react';
 import { View, StyleSheet, TouchableOpacity,Text } from 'react-native';
@@ -23,7 +23,7 @@ export default class Filter extends Component {
                     }}
                     rightElement={
                         <TouchableOpacity style={styles.filterStyle} onPress={() => this.props.openModal()}>
-                            <Icon name="filter" style={styles.actionButtonIcon} />
+                            <Icon name="filter-list" style={styles.actionButtonIcon} />
                         </TouchableOpacity>
                     }
                 />

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Checkbox } from 'react-native-material-ui';
 
 class CardType extends Component {
@@ -11,16 +11,26 @@ class CardType extends Component {
 
     render() {
         return (
-            <View style={styles.categoria}>
+            <View>
                 <Text style={styles.categoriaTexto}>By Type:</Text>
-                <View style={styles.checks}>
-                    <Checkbox label='Land' onCheck={() => { }} />
-                    <Checkbox label='Creature' onCheck={() => { }} />
-                    <Checkbox label='Artifact' onCheck={() => { }} />
-                    <Checkbox label='Enchantment' onCheck={() => { }} />
-                    <Checkbox label='Planeswalker' onCheck={() => { }} />
+                <View style={styles.categoria}>
+                    <View style={{ flexDirection: "row"}}>
+                        <View style={{ flexDirection: 'column', width: 160, marginTop: 20, paddingRight: 2 }}>
+                            <ScrollView>
+                                <Checkbox label='Enchantment' onCheck={() => { }} />
+                                <Checkbox label='Planeswalker' onCheck={() => { }} />
+                                <Checkbox label='Creature' onCheck={() => { }} />
+                            </ScrollView>
+                        </View>
+                        <View style={styles.column}>
+                            <ScrollView>
+                                <Checkbox label='Land' onCheck={() => { }} />
+                                <Checkbox label='Artifact' onCheck={() => { }} />
+                            </ScrollView>
+                        </View>
+                    </View>
                 </View>
-            </View>
+            </View >
         );
     }
 }
@@ -28,17 +38,23 @@ class CardType extends Component {
 export default CardType;
 const styles = StyleSheet.create({
     categoria: {
-        height: Dimensions.get('window').height * 0.6,
+        height: Dimensions.get('window').height * 0.3,
+        flexDirection: 'column',
         borderColor: '#000000',
         borderWidth: 1,
         borderRadius: 40,
         marginTop: 20,
     },
-    categoriaTexto:{
+    categoriaTexto: {
         paddingTop: 10,
         paddingLeft: 20
     },
     checks: {
         margin: 20,
+    },
+    column: {
+        flexDirection: 'column',
+        width: 150,
+        marginTop: 20,
     }
 });

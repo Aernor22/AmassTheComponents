@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, Dimensions,ScrollView } from 'react-native';
 import { Checkbox } from 'react-native-material-ui';
 
 class CardColor extends Component {
@@ -11,18 +11,24 @@ class CardColor extends Component {
 
     render() {
         return (
-            <View style={styles.categoria}>
+            <View>
                 <Text style={styles.categoriaTexto}>By Color:</Text>
-                <View style={{flexDirection:'row'}}>
-                <View style={{flexDirection:'column', width: (Dimensions.get('window').height * 0.8)/2}}>
-                    <Checkbox label='Colorless' onCheck={() => { }} />
-                    <Checkbox label='White' onCheck={() => { }} />
-                    <Checkbox label='Black' onCheck={() => { }} />
-                </View>
-                <View style={{flexDirection:'column',width :(Dimensions.get('window').height * 0.8)/2}}>
-                    <Checkbox label='Blue' onCheck={() => { }} />
-                    <Checkbox label='Red' onCheck={() => { }} />
-                    <Checkbox label='Green' onCheck={() => { }} />
+                <View style={styles.categoria}>
+                <View style={{ flexDirection: 'row' }}>
+                    <View style={styles.column}>
+                        <ScrollView>
+                            <Checkbox label='Colorless' onCheck={() => { }} />
+                            <Checkbox label='White' onCheck={() => { }} />
+                            <Checkbox label='Black' onCheck={() => { }} />
+                        </ScrollView>
+                    </View>
+                    <View style={styles.column}>
+                        <ScrollView>
+                            <Checkbox label='Blue' onCheck={() => { }} />
+                            <Checkbox label='Red' onCheck={() => { }} />
+                            <Checkbox label='Green' onCheck={() => { }} />
+                        </ScrollView>
+                    </View>
                 </View>
                 </View>
             </View>
@@ -34,7 +40,8 @@ export default CardColor;
 
 const styles = StyleSheet.create({
     categoria: {
-        height: Dimensions.get('window').height * 0.5,
+        height: Dimensions.get('window').height * 0.3,
+        flexDirection: 'column',
         borderColor: '#000000',
         borderWidth: 1,
         borderRadius: 40,
@@ -46,5 +53,10 @@ const styles = StyleSheet.create({
     },
     checks: {
         margin: 20,
+    },
+    column:{
+        flexDirection: 'column', 
+        width: 150,
+        marginTop: 20,
     }
 });
