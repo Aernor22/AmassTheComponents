@@ -21,7 +21,8 @@ export default class ModalInfo extends Component {
                 <Modal
                     visible={this.props.visible}
                     animationType="slide"
-                    transparent={true}>
+                    transparent={true}
+                    onRequestClose={()=>{this.props.closeModal()}}>
                     <TouchableOpacity key="overlay" style={styles.overlay} onPress={this.props.closeModal}>
                         <TouchableWithoutFeedback>
                             <View style={styles.modal}>

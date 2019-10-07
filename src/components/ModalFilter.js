@@ -13,7 +13,6 @@ import CardColor from './CardColor';
 import CardType from './CardType';
 import CardRarity from './CardRarity';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import { AndroidBackHandler } from 'react-navigation-backhandler'
 
 
 class ModalFilter extends Component {
@@ -21,14 +20,17 @@ class ModalFilter extends Component {
         super(props);
         this.state = {
             onEntry: 0,
-            entries: ['type', 'color', 'rarity']
+            entries: ['type', 'color', 'rarity'],
+            rarity: 'Any',
+            colors: [],
+            types: []
         };
     }
 
     _renderItem({ item }) {
-        if (item === 'color') return (<CardColor />);
-        if (item === 'type')  return (<CardType />);
-        if (item === 'rarity') return (<CardRarity />);
+        if (item === 'color') return (<CardColor changeColor={(color,remove)=>this.changeColor(color,remove)}/>);
+        if (item === 'type')  return (<CardType  changeType={(type,remove)=>this.changeType(type,remove)}/>);
+        if (item === 'rarity') return (<CardRarity changeRarity={(text)=>this.changeRarity(text)}/>);
     }
 
     closeModal(){
@@ -36,14 +38,52 @@ class ModalFilter extends Component {
         this.props.closeModal();
     }
 
+    changeRarity(rarity){
+        this.setState({rarity});
+    }
+
+    changeColors(color, remove) {
+        if (remove) {
+            if (this.state.colors.includes(color)) {
+                var auxColors = [...this.state.colors];
+                for (var i = 0; i < auxColors.length; i++) {
+                    if (auxColors[i] === color) {
+                        this.setState({ colors: auxColors.splice(i, 1) });
+                    }
+                }
+            }
+        } else {
+            if (!this.state.colors.includes(color)) {
+                this.setState({ colors: [...colors, color] });
+            }
+        }
+    }
+
+    changeTypes(type, remove) {
+        if (remove) {
+            if (this.state.types.includes(color)) {
+                var auxType = [...this.state.types];
+                for (var i = 0; i < auxType.length; i++) {
+                    if (auxType[i] === color) {
+                        this.setState({ types: auxType.splice(i, 1) });
+                    }
+                }
+            }
+        } else {
+            if (!this.state.types.includes(type)) {
+                this.setState({ types: [...types, type] });
+            }
+        }
+    }
+
     render() {
         return (
-            <AndroidBackHandler onBackPress={()=>{this.closeModal();return true;}}>
             <View style={styles.container}>
                 <Modal
                     visible={this.props.visible}
                     animationType="slide"
-                    transparent={true}>
+                    transparent={true}
+                    onRequestClose={()=>{this.closeModal()}}>
                     <TouchableOpacity key="overlay" style={styles.overlay} onPress={()=>this.closeModal()}>
                         <TouchableWithoutFeedback>
                             <View style={styles.modal}>
@@ -51,7 +91,7 @@ class ModalFilter extends Component {
                                 <Carousel
                                     ref={(c) => { this._carousel = c; }}
                                     data={this.state.entries}
-                                    renderItem={item => this._renderItem(item)}
+                                    renderItem={(item) => this._renderItem(item)}
                                     sliderWidth={(Dimensions.get('window').width * 0.9) - 40}
                                     itemWidth={(Dimensions.get('window').width * 0.9) - 60}
                                     slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.9) - 60 }}
@@ -74,7 +114,7 @@ class ModalFilter extends Component {
                                     />
                                 </View>
                                 <View style={styles.btnContainer}>
-                                    <Button primary icon="filter-list" text="Filter" />
+                                    <Button primary icon="filter-list" text="Filter" onPress={()=>console.log(this.state.rarity)}/>
                                     <Button accent icon="clear" text="Clean" />
                                 </View>
                             </View>
@@ -82,7 +122,6 @@ class ModalFilter extends Component {
                     </TouchableOpacity>
                 </Modal>
             </View>
-            </AndroidBackHandler>
         );
     }
 }

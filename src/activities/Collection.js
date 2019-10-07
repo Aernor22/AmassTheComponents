@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {View, StyleSheet } from 'react-native'
+import { View, StyleSheet } from 'react-native'
 import List from "../components/List"
 import { retrieveAll, addCard } from "../layers/CRUDLayer"
 import { AndroidBackHandler } from 'react-navigation-backhandler'
@@ -16,7 +16,7 @@ export default class Collection extends Component {
             list: [],
             cardId: '',
             modalInfoVisible: false,
-            modalFilterVisible: false
+            modalFilterVisible: false,
         };
 
         this.refresh = this.refresh.bind(this);
@@ -28,24 +28,24 @@ export default class Collection extends Component {
         addCard({ name: text });
     }
 
-    refresh(list) {
+    async refresh(list) {
         console.log("refresh");
         console.log(list);
         this.setState({ list });
     }
 
     searchFilterFunction = async (text) => {
-        console.log("screech "+ text);
-        if(text){
+        console.log("screech " + text);
+        if (text) {
             const newData = this.state.list.filter(item => {
-                if(item.name.toUpperCase().includes(text.toUpperCase())){
+                if (item.name.toUpperCase().includes(text.toUpperCase())) {
                     return item;
                 }
             });
 
-            this.refresh(newData);
-        }else{
-            this.refresh(await retrieveAll());    
+            await this.refresh(newData);
+        } else {
+            this.refresh(await retrieveAll());
         }
     };
 
@@ -77,10 +77,20 @@ export default class Collection extends Component {
     render() {
         return (
             <AndroidBackHandler onBackPress={this.onBackButtonPressAndroid}>
-                <View  styles={styles.container}> 
-                    <Filter styles={styles.filter} searchFilterFunction={this.searchFilterFunction} openModal={this.openFilterModal}/>
-                    <ModalFilter visible={this.state.modalFilterVisible} closeModal={this.closeFilterModal} refresh={this.refresh}/>
-                    <ModalInfo visible={this.state.modalInfoVisible} closeModal={this.closeInfoModal} cardId={this.state.cardId} refresh={this.refresh} />
+                <View styles={styles.container}>
+                    <Filter
+                        styles={styles.filter}
+                        searchFilterFunction={this.searchFilterFunction}
+                        openModal={this.openFilterModal} />
+                    <ModalFilter
+                        visible={this.state.modalFilterVisible}
+                        closeModal={this.closeFilterModal}
+                        refresh={this.refresh}/>
+                    <ModalInfo
+                        visible={this.state.modalInfoVisible}
+                        closeModal={this.closeInfoModal}
+                        cardId={this.state.cardId}
+                        refresh={this.refresh} />
                     <List list={this.state.list} openModal={this.openInfoModal} />
                 </View>
             </AndroidBackHandler>
