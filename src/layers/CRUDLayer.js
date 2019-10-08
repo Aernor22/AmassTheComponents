@@ -38,6 +38,10 @@ var db = new Datastore({ filename: 'asyncStorageKey', autoload: true });
         return await findPromise;
     }
 
+    export async function findByObject(obj) {
+        
+    }
+
     export async function removeCard (cardId){
         console.log("Trying to delete "+ cardId);
         await db.findOne({_id: cardId},async function(err,doc){

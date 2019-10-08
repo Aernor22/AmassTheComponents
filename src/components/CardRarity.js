@@ -23,46 +23,55 @@ class CardRarity extends Component {
 
         switch (qual) {
             case 'Any':
-                selected.any = value;
-
-                selected.mRare = !value;
-                selected.rare = !value;
-                selected.ucommon = !value;
-                selected.common = !value;
+                if (value) {
+                    selected.any = value;
+                    selected.mRare = !value;
+                    selected.rare = !value;
+                    selected.ucommon = !value;
+                    selected.common = !value;
+                }
                 break;
             case 'Mythic Rare':
-                selected.mRare = value;
+                if (value) {
+                    selected.mRare = value;
 
-                selected.any = !value;
-                selected.rare = !value;
-                selected.ucommon = !value;
-                selected.common = !value;
+                    selected.any = !value;
+                    selected.rare = !value;
+                    selected.ucommon = !value;
+                    selected.common = !value;
+                }
                 break;
             case 'Rare':
-                selected.rare = value;
+                if (value) {
+                    selected.rare = value;
 
-                selected.mRare = !value;
-                selected.any = !value;
-                selected.ucommon = !value;
-                selected.common = !value;
+                    selected.mRare = !value;
+                    selected.any = !value;
+                    selected.ucommon = !value;
+                    selected.common = !value;
+                }
                 break;
             case 'Uncommon':
-                selected.ucommon = value;
+                if (value) {
+                    selected.ucommon = value;
 
 
-                selected.mRare = !value;
-                selected.rare = !value;
-                selected.any = !value;
-                selected.common = !value;
+                    selected.mRare = !value;
+                    selected.rare = !value;
+                    selected.any = !value;
+                    selected.common = !value;
+                }
                 break;
             case 'Common':
-                selected.common = value;
+                if (value) {
+                    selected.common = value;
 
 
-                selected.mRare = !value;
-                selected.rare = !value;
-                selected.ucommon = !value;
-                selected.any = !value;
+                    selected.mRare = !value;
+                    selected.rare = !value;
+                    selected.ucommon = !value;
+                    selected.any = !value;
+                }
                 break;
         }
 
@@ -81,17 +90,17 @@ class CardRarity extends Component {
                                 <RadioButton
                                     checked={this.state.selected.any} label='Any'
                                     onCheck={(checked) => { this.setSelected('Any', checked) }}
-                                    selected={()=>{}}
+                                    onSelect={() => { }}
                                     value='Any' />
                                 <RadioButton
                                     checked={this.state.selected.mRare} label='Mythic Rare'
                                     onCheck={(checked) => { this.setSelected('Mythic Rare', checked) }}
-                                    selected={()=>{}}
+                                    onSelect={() => { }}
                                     value='Mythic Rare' />
                                 <RadioButton
                                     checked={this.state.selected.rare} label='Rare'
                                     onCheck={(checked) => { this.setSelected('Rare', checked) }}
-                                    selected={()=>{}}
+                                    onSelect={() => { }}
                                     value='Rare' />
                             </ScrollView>
                         </View>
@@ -100,12 +109,12 @@ class CardRarity extends Component {
                                 <RadioButton
                                     checked={this.state.selected.ucommon} label='Uncommon'
                                     onCheck={(checked) => { this.setSelected('Uncommon', checked) }}
-                                    selected={()=>{}}
+                                    onSelect={() => { }}
                                     value='Uncommon' />
                                 <RadioButton
                                     checked={this.state.selected.common} label='Common'
                                     onCheck={(checked) => { this.setSelected('Common', checked) }}
-                                    selected={()=>{}}
+                                    onSelect={() => { }}
                                     value='Common' />
                             </ScrollView>
                         </View>
