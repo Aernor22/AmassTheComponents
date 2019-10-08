@@ -12,7 +12,8 @@ class ModalConfirm extends Component {
   }
 
   handleAdd(text) {
-    addCard({ name: text });
+    var obj = JSON.parse(text);
+    addCard(obj);
   }
 
   render() {

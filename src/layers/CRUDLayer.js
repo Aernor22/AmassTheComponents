@@ -39,7 +39,17 @@ var db = new Datastore({ filename: 'asyncStorageKey', autoload: true });
     }
 
     export async function findByObject(obj) {
-        
+        var findPromise = new Promise((resolve,reject)=>{
+        db.find(obj, function (err, docs) {
+            console.log("inside retrieve");
+                if(docs){
+                    console.log(docs);
+                    resolve(docs);
+                }
+          });
+        });
+        console.log(obj);
+        return await findPromise;
     }
 
     export async function removeCard (cardId){

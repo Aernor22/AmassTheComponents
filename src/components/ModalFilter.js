@@ -13,7 +13,7 @@ import CardColor from './CardColor';
 import CardType from './CardType';
 import CardRarity from './CardRarity';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import {retrieveAll} from '../layers/CRUDLayer';
+import {retrieveAll, findByObject} from '../layers/CRUDLayer';
 
 class ModalFilter extends Component {
     constructor(props) {
@@ -41,6 +41,33 @@ class ModalFilter extends Component {
     async cleanAndClose(){
         this.setState({rarity: 'Any', colors: [],types: []});
         this.props.refresh(await retrieveAll());
+        this.closeModal();
+    }
+
+    async searchAndClose(){
+        var obj;
+        if(this.state.colors.length>0){
+            if(this.state.colors != 'Colorless'){
+                obj = {...obj, colors: { $in: this.state.colors}};
+            }else{
+                obj = {...obj, colors: []};
+            }
+        }
+
+        if(this.state.types.length>0){
+            obj = {...obj, types: { $in: this.state.types}};
+        }
+
+        if(this.state.rarity){
+            if(this.state.rarity!=='Any'){
+                obj = {...obj, rarity: this.state.rarity};
+            }
+        }
+
+        console.log(obj);
+        this.props.refresh(await findByObject(obj));
+
+        this.setState({rarity: 'Any', colors: [],types: []});
         this.closeModal();
     }
 
@@ -126,7 +153,7 @@ class ModalFilter extends Component {
                                     />
                                 </View>
                                 <View style={styles.btnContainer}>
-                                    <Button primary icon="filter-list" text="Filter" onPress={() => console.log(this.state.rarity)} />
+                                    <Button primary icon="filter-list" text="Filter" onPress={async () => {this.searchAndClose()}} />
                                     <Button accent icon="clear" text="Clean" onPress={async ()=>{this.cleanAndClose()}}/>
                                 </View>
                             </View>
