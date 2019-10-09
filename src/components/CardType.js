@@ -54,13 +54,13 @@ class CardType extends Component {
                 <Text style={styles.categoriaTexto}>By Type:</Text>
                 <View style={styles.categoria}>
                     <View style={{ flexDirection: "row" }}>
-                        <View style={{ flexDirection: 'column', width: 160, paddingRight: 2, justifyContent: 'space-evenly', backgroundColor: '#8ea1bf' }}>
-                                <Checkbox label='Enchantment' onCheck={(checked) => { this.onCheck('Enchantment', checked) }} checked={this.state.types.enchantment} value='Enchantment' style={{height:20}}/>
+                        <View style={{ flexDirection: 'column', width: 160,marginTop: 20, marginBottom: 20, height: '70%', paddingRight: 2, justifyContent: 'space-between'}}>
+                                <Checkbox label='Enchantment' onCheck={(checked) => { this.onCheck('Enchantment', checked) }} checked={this.state.types.enchantment} value='Enchantment'/>
                                 <Checkbox label='Instant' onCheck={(checked) => { this.onCheck('Instant', checked) }} checked={this.state.types.instant} value='Instant' />
                                 <Checkbox label='Sorcery' onCheck={(checked) => { this.onCheck('Sorcery', checked) }} checked={this.state.types.sorcery} value='Sorcery' />
+                                <Checkbox label='Planeswalker' onCheck={(checked) => { this.onCheck('Planeswalker', checked) }} checked={this.state.types.planeswalker} value='Planeswalker' />
                         </View>
                         <View style={styles.column}>
-                                <Checkbox label='Planeswalker' onCheck={(checked) => { this.onCheck('Planeswalker', checked) }} checked={this.state.types.planeswalker} value='Planeswalker' />
                                 <Checkbox label='Creature' onCheck={(checked) => { this.onCheck('Creature', checked) }} checked={this.state.types.creature} value='Creature' />
                                 <Checkbox label='Land' onCheck={(checked) => { this.onCheck('Land', checked) }} checked={this.state.types.land} value='Land' />
                                 <Checkbox label='Artifact' onCheck={(checked) => { this.onCheck('Artifact', checked) }} checked={this.state.types.artifact} value='Artifact' />
@@ -91,7 +91,9 @@ const styles = StyleSheet.create({
     },
     column: {
         flexDirection: 'column',
-        width: 150,
+        width: 150, 
+        height: '70%',
         marginTop: 20,
+        justifyContent: 'space-between'
     }
 });
