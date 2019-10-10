@@ -26,8 +26,10 @@ export default class ModalInfo extends Component {
                     <TouchableOpacity key="overlay" style={styles.overlay} onPress={this.props.closeModal}>
                         <TouchableWithoutFeedback>
                             <View style={styles.modal}>
-                                <Button onPress={async ()=> await this.delete()} title="Remove 1" />
-                                <Button onPress={async () => await this.deleteAll()} title="Remove All" />
+                                <View style={{alignSelf:'flex-end',flexDirection:'row', alignItems:'center',justifyContent: 'space-evenly', width: '100%'}}>
+                                    <Button onPress={async ()=> await this.delete()} title="Remove 1" />
+                                    <Button onPress={async () => await this.deleteAll()} title="Remove All" />
+                                </View>
                             </View>
                         </TouchableWithoutFeedback>
                     </TouchableOpacity>
@@ -49,19 +51,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#00000080'
     },
     modal:{
-        width: Dimensions.get('window').width * 0.6,
-        height: Dimensions.get('window').height * 0.35,
+        width: Dimensions.get('window').width * 0.7,
+        height: Dimensions.get('window').height * 0.7,
         backgroundColor: '#fff', padding: 20,
         borderRadius: 40,
-        flexDirection: 'column',
-        justifyContent: 'space-evenly',
+        flexDirection: 'column'
     },
-    categoria: {
-        width: Dimensions.get('window').width * 0.5,
-        height: Dimensions.get('window').height * 0.1,
-        borderColor: '#000000',
-        borderWidth: 1,
-        borderRadius: 40,
-    }
 });
 
