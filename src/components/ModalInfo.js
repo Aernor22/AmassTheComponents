@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
-import { View, Button, StyleSheet, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { removeAllCopies, removeCard, retrieveAll } from "../layers/CRUDLayer";
+import { Button } from 'react-native-material-ui';
+import Carousel, { Pagination } from 'react-native-snap-carousel';
 export default class ModalInfo extends Component {
 
     async delete() {
@@ -26,9 +28,24 @@ export default class ModalInfo extends Component {
                     <TouchableOpacity key="overlay" style={styles.overlay} onPress={this.props.closeModal}>
                         <TouchableWithoutFeedback>
                             <View style={styles.modal}>
+                            <View style={{ marginTop: 5, marginBottom: 5 }}>
+                                    <Pagination
+                                        dotsLength={this.state.entries.length}
+                                        activeDotIndex={this.state.onEntry}
+                                        dotStyle={{
+                                            width: 10,
+                                            height: 10,
+                                            borderRadius: 5,
+                                            marginHorizontal: 8,
+                                            backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                                        }}
+                                        inactiveDotOpacity={0.4}
+                                        inactiveDotScale={0.6}
+                                    />
+                                </View>
                                 <View style={{alignSelf:'flex-end',flexDirection:'row', alignItems:'center',justifyContent: 'space-evenly', width: '100%'}}>
-                                    <Button onPress={async ()=> await this.delete()} title="Remove 1" />
-                                    <Button onPress={async () => await this.deleteAll()} title="Remove All" />
+                                    <Button accent icon="clear" onPress={async ()=> await this.delete()} text="Remove 1" />
+                                    <Button accent icon="clear" onPress={async ()=> await this.deleteAll()} text="Remove All" />
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
