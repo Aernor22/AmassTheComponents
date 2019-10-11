@@ -39,7 +39,8 @@ export default class ModalInfo extends Component {
                                 </View>
                                 <View>
                                     <Image
-                                        style={{width: 300, height: 400}}
+                                        style={{width: (Dimensions.get('window').width * 0.6), height: (Dimensions.get('window').height * 0.5)}}
+                                        resizeMethod='resize'
                                         source={{uri:this.props.card.imageUrl}}/>
                                 </View>
                                     <Pagination
