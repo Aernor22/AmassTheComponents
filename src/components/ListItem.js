@@ -6,7 +6,7 @@ class ListItem extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <TouchableOpacity onPress = {()=>{console.log(this.props.item._id);this.props.openModal(this.props.item._id)}}>
+                <TouchableOpacity onPress = {()=>{console.log(this.props.item._id);this.props.openModal(this.props.item._id, this.props.item)}}>
                     <Text>{this.props.item.quantity} x {this.props.item.name}</Text>
                 </TouchableOpacity>
             </View>

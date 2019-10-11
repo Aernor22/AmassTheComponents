@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { View, StyleSheet } from 'react-native'
 import List from "../components/List"
-import { retrieveAll, addCard } from "../layers/CRUDLayer"
+import { retrieveAll, addCard,retrieveCard } from "../layers/CRUDLayer"
 import { AndroidBackHandler } from 'react-navigation-backhandler'
 import ModalInfo from '../components/ModalInfo';
 import ModalFilter from '../components/ModalFilter';
@@ -15,11 +15,13 @@ export default class Collection extends Component {
             listHolder: [],
             list: [],
             cardId: '',
+            card:{},
             modalInfoVisible: false,
             modalFilterVisible: false,
         };
 
         this.refresh = this.refresh.bind(this);
+        this.refreshCard = this.refreshCard.bind(this)
         this.openInfoModal = this.openInfoModal.bind(this);
         this.openFilterModal = this.openFilterModal.bind(this);
     }
@@ -32,6 +34,11 @@ export default class Collection extends Component {
         console.log("refresh");
         console.log(list);
         this.setState({ list });
+    }
+
+    async refreshCard(cardId){
+        this.setState({card: await retrieveCard(cardId)});
+        console.log('substituindo');
     }
 
     searchFilterFunction = async (text) => {
@@ -58,8 +65,8 @@ export default class Collection extends Component {
         return true;
     };
 
-    openInfoModal(cardId) {
-        this.setState({ cardId, modalInfoVisible: true });
+    openInfoModal(cardId,card) {
+        this.setState({ cardId, card, modalInfoVisible: true });
     }
 
     openFilterModal(cardId) {
@@ -90,7 +97,9 @@ export default class Collection extends Component {
                         visible={this.state.modalInfoVisible}
                         closeModal={this.closeInfoModal}
                         cardId={this.state.cardId}
-                        refresh={this.refresh} />
+                        card={this.state.card}
+                        refresh={this.refresh} 
+                        refreshCard={this.refreshCard}/>
                     <List list={this.state.list} openModal={this.openInfoModal} />
                 </View>
             </AndroidBackHandler>

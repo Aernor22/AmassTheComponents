@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import { removeAllCopies, removeCard, retrieveAll } from "../layers/CRUDLayer";
 import { Button } from 'react-native-material-ui';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
+
 export default class ModalInfo extends Component {
+    state ={
+        card: this.props.card
+    }
 
     async delete() {
         await removeCard(this.props.cardId).then(
-            setTimeout(async ()=>this.props.refresh(await retrieveAll()), 1)
+            setTimeout(async ()=>{this.props.refresh(await retrieveAll())}, 0.5)
+        ).then(
+            setTimeout(async ()=>{this.props.refreshCard(this.props.cardId)}, 0.5)
         );
     }
 
     async deleteAll(){
-        await removeAllCopies(this.props.cardId).then(
-            setTimeout(async ()=>this.props.refresh(await retrieveAll()), 1)
-        );
+        await removeAllCopies(this.props.cardId).then(setTimeout(async ()=>this.props.refresh(await retrieveAll(),true), 0.5));
     }
 
     render() {
+        
         return (
             <View style={styles.container}>
                 <Modal
@@ -29,9 +34,10 @@ export default class ModalInfo extends Component {
                         <TouchableWithoutFeedback>
                             <View style={styles.modal}>
                             <View style={{ marginTop: 5, marginBottom: 5 }}>
+                                <View style={{alignSelf:'flex-end'}}>
+                                    <Text>Quantity: {this.props.card.quantity}</Text>
+                                </View>
                                     <Pagination
-                                        dotsLength={this.state.entries.length}
-                                        activeDotIndex={this.state.onEntry}
                                         dotStyle={{
                                             width: 10,
                                             height: 10,
@@ -44,8 +50,10 @@ export default class ModalInfo extends Component {
                                     />
                                 </View>
                                 <View style={{alignSelf:'flex-end',flexDirection:'row', alignItems:'center',justifyContent: 'space-evenly', width: '100%'}}>
-                                    <Button accent icon="clear" onPress={async ()=> await this.delete()} text="Remove 1" />
-                                    <Button accent icon="clear" onPress={async ()=> await this.deleteAll()} text="Remove All" />
+                                    <Button accent icon="delete" onPress={async ()=> await this.delete()} text="Remove 1" />
+                                    <Button accent icon="delete-forever" onPress={async ()=> await this.deleteAll()} text="Remove All" />
+                                    
+                                    <Button accent icon="clear" onPress={async ()=> await this.props.refreshCard(this.props.cardId)} text="reset" />
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>

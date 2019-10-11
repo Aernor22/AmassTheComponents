@@ -18,10 +18,19 @@ var db = new Datastore({ filename: 'asyncStorageKey', autoload: true });
         });
     }
 
-    export function retrieveCard (cardId){
-        db.findOne({_id: cardId},function(err,doc){
-            return doc; 
-        });
+    export async function retrieveCard (cardId){
+        console.log("async ret "+cardId);
+        var findPromise = new Promise((resolve,reject)=>{
+            db.findOne({_id: cardId},async function(err,doc){
+                console.log('Retrieve one');
+                if(doc){
+                    console.log(doc);
+                    resolve(doc); 
+                }
+            });
+        })
+
+        return await findPromise;
     }
 
     export async function retrieveAll (){
