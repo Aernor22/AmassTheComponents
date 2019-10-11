@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, StyleSheet, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, Modal, Dimensions, TouchableWithoutFeedback, TouchableOpacity, Image } from 'react-native';
 import { removeAllCopies, removeCard, retrieveAll } from "../layers/CRUDLayer";
 import { Button } from 'react-native-material-ui';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
@@ -37,6 +37,11 @@ export default class ModalInfo extends Component {
                                 <View style={{alignSelf:'flex-end'}}>
                                     <Text>Quantity: {this.props.card.quantity}</Text>
                                 </View>
+                                <View>
+                                    <Image
+                                        style={{width: 300, height: 400}}
+                                        source={{uri:this.props.card.imageUrl}}/>
+                                </View>
                                     <Pagination
                                         dotStyle={{
                                             width: 10,
@@ -52,8 +57,6 @@ export default class ModalInfo extends Component {
                                 <View style={{alignSelf:'flex-end',flexDirection:'row', alignItems:'center',justifyContent: 'space-evenly', width: '100%'}}>
                                     <Button accent icon="delete" onPress={async ()=> await this.delete()} text="Remove 1" />
                                     <Button accent icon="delete-forever" onPress={async ()=> await this.deleteAll()} text="Remove All" />
-                                    
-                                    <Button accent icon="clear" onPress={async ()=> await this.props.refreshCard(this.props.cardId)} text="reset" />
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
