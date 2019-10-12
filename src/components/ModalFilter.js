@@ -9,9 +9,9 @@ import {
     Text
 } from 'react-native';
 import { Button } from 'react-native-material-ui';
-import CardColor from './CardColor';
-import CardType from './CardType';
-import CardRarity from './CardRarity';
+import CardColor from './cards/cardsFilter/CardColor';
+import CardType from './cards/cardsFilter/CardType';
+import CardRarity from './cards/cardsFilter/CardRarity';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import {retrieveAll, findByObject} from '../layers/CRUDLayer';
 

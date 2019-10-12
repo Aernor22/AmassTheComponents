@@ -44,12 +44,13 @@ export default class Collection extends Component {
     searchFilterFunction = async (text) => {
         console.log("screech " + text);
         if (text) {
-            const newData = this.state.list.filter(item => {
+            
+            var newData = this.state.list.filter(item => {
                 if (item.name.toUpperCase().includes(text.toUpperCase())) {
                     return item;
                 }
             });
-
+            
             await this.refresh(newData);
         } else {
             this.refresh(await retrieveAll());
