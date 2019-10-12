@@ -45,7 +45,7 @@ export default class Collection extends Component {
         console.log("screech " + text);
         if (text) {
             
-            var newData = this.state.list.filter(item => {
+            var newData = this.state.listHolder.filter(item => {
                 if (item.name.toUpperCase().includes(text.toUpperCase())) {
                     return item;
                 }
@@ -59,6 +59,7 @@ export default class Collection extends Component {
 
     async componentDidMount() {
         this.refresh(await retrieveAll());
+        this.setState({listHolder: this.state.list});
     }
 
     onBackButtonPressAndroid = () => {
