@@ -56,6 +56,8 @@ export default class ModalLanguage extends Component {
                                         itemWidth={(Dimensions.get('window').width * 0.6) - 50}
                                         slideStyle={{ borderRadius: 40, backgroundColor: '#e0e0e0', width: (Dimensions.get('window').width * 0.6) - 50 }}
                                         layout={'default'}
+                                        enableMomentum={true}
+                                        decelerationRate={0.9}
                                     />
                                 </View>
                                 <Text style={{ textAlign: 'center', paddingTop: 15 }}> (Slide to choose) </Text>
