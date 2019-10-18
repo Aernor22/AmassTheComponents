@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { Text, View, Dimensions, StyleSheet, FlatList } from 'react-native'
+import React, { Component } from 'react';
+import { Text, View, Dimensions, StyleSheet, FlatList } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export class CardLegality extends Component {
