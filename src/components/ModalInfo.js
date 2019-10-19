@@ -35,10 +35,10 @@ export default class ModalInfo extends Component {
     }
 
     _renderItem({ item }) {
-        if (item === 'image') return (<CardImage card={this.props.card}/>);
-        if (item === 'info') return (<View  card={this.props.card} style={{height: (Dimensions.get('window').height * 0.5),padding: 20, backgroundColor: 'red'}}></View>);
-        if (item === 'rulings') return (<CardRulings  card={this.props.card}/>);
-        if (item === 'legality') return (<CardLegality  card={this.props.card}/>);
+        if (item === 'image') return (<CardImage card={this.props.card} />);
+        if (item === 'info') return (<View card={this.props.card} style={{ height: (Dimensions.get('window').height * 0.5), padding: 20, backgroundColor: 'red' }}></View>);
+        if (item === 'rulings') return (<CardRulings card={this.props.card} />);
+        if (item === 'legality') return (<CardLegality card={this.props.card} />);
     }
 
     render() {
@@ -50,46 +50,48 @@ export default class ModalInfo extends Component {
                     visible={this.props.visible}
                     animationType="slide"
                     transparent={true}
-                    onRequestClose={() => {this.closeModal() }}>
+                    onRequestClose={() => { this.closeModal() }}>
                     <TouchableOpacity key="overlay" style={styles.overlay} onPress={() => this.closeModal()}>
                         <TouchableWithoutFeedback>
                             <View style={styles.modal}>
                                 <View style={{ marginTop: 5, marginBottom: 5 }}>
-                                        <View style={{ flex: 1, paddingBottom: 40 }}>
-                                            <View style={{ alignSelf: 'flex-start' }}>
-                                                <Text style={{ alignSelf: 'flex-start',fontWeight: "bold" }}>{this.props.card.name}</Text>
-                                            </View>
-                                            <View style={{ alignSelf: 'flex-end' }}>
-                                                <Text style={{ alignSelf: 'flex-end' }}>Quantity: {this.props.card.quantity}</Text>
-                                            </View>
+                                    <View style={{ flex: 1, paddingBottom: 40 }}>
+                                        <View style={{ alignSelf: 'flex-start' }}>
+                                            <Text style={{ alignSelf: 'flex-start', fontWeight: "bold" }}>{this.props.card.name}</Text>
                                         </View>
-                                    <Carousel
-                                        ref={(c) => { this._carousel = c; }}
-                                        data={this.state.entries}
-                                        renderItem={(item) => this._renderItem(item)}
-                                        sliderWidth={(Dimensions.get('window').width * 0.6) + 20}
-                                        itemWidth={(Dimensions.get('window').width * 0.6)}
-                                        slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.6) }}
-                                        layout={'default'}
-                                        enableMomentum={true}
-                                        decelerationRate={0.9}
-                                        onSnapToItem={(index) => this.setState({ onEntry: index })}
-                                        style={{alignSelf:'center'}}
-                                    />
-                                    <View style={{ marginTop: 5, marginBottom: 5 }}>
-                                        <Pagination
-                                            dotsLength={this.state.entries.length}
-                                            activeDotIndex={this.state.onEntry}
-                                            dotStyle={{
-                                                width: 10,
-                                                height: 10,
-                                                borderRadius: 5,
-                                                marginHorizontal: 8,
-                                                backgroundColor: 'rgba(0, 0, 0, 0.75)'
-                                            }}
-                                            inactiveDotOpacity={0.4}
-                                            inactiveDotScale={0.6}
+                                        <View style={{ alignSelf: 'flex-end' }}>
+                                            <Text style={{ alignSelf: 'flex-end' }}>Quantity: {this.props.card.quantity}</Text>
+                                        </View>
+                                    </View>
+                                    <View style={{ alignItems: 'center' }}>
+                                        <Carousel
+                                            ref={(c) => { this._carousel = c; }}
+                                            data={this.state.entries}
+                                            renderItem={(item) => this._renderItem(item)}
+                                            sliderWidth={(Dimensions.get('window').width * 0.6) + 20}
+                                            itemWidth={(Dimensions.get('window').width * 0.6)}
+                                            slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.6) }}
+                                            layout={'default'}
+                                            enableMomentum={true}
+                                            decelerationRate={0.9}
+                                            onSnapToItem={(index) => this.setState({ onEntry: index })}
+                                            style={{ alignSelf: 'center' }}
                                         />
+                                        <View style={{ marginTop: 5, marginBottom: 5 }}>
+                                            <Pagination
+                                                dotsLength={this.state.entries.length}
+                                                activeDotIndex={this.state.onEntry}
+                                                dotStyle={{
+                                                    width: 10,
+                                                    height: 10,
+                                                    borderRadius: 5,
+                                                    marginHorizontal: 8,
+                                                    backgroundColor: 'rgba(0, 0, 0, 0.75)'
+                                                }}
+                                                inactiveDotOpacity={0.4}
+                                                inactiveDotScale={0.6}
+                                            />
+                                        </View>
                                     </View>
                                 </View>
                                 <View style={{ alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: '100%' }}>
@@ -121,7 +123,6 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height * 0.8,
         backgroundColor: '#fff', padding: 20,
         borderRadius: 40,
-        alignItems: 'center',
         flexDirection: 'column'
     },
 });
