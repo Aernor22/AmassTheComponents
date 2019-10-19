@@ -6,6 +6,7 @@ import Carousel, { Pagination } from 'react-native-snap-carousel';
 import CardImage from "./cards/cardsInfo/CardImage";
 import CardLegality from './cards/cardsInfo/CardLegality';
 import CardRulings from './cards/cardsInfo/CardRulings';
+import CardInfo from './cards/cardsInfo/CardInfo';
 
 export default class ModalInfo extends Component {
     constructor(props) {
@@ -36,7 +37,7 @@ export default class ModalInfo extends Component {
 
     _renderItem({ item }) {
         if (item === 'image') return (<CardImage card={this.props.card} />);
-        if (item === 'info') return (<View card={this.props.card} style={{ height: (Dimensions.get('window').height * 0.5), padding: 20, backgroundColor: 'red' }}></View>);
+        if (item === 'info') return (<CardInfo card={this.props.card}/>);
         if (item === 'rulings') return (<CardRulings card={this.props.card} />);
         if (item === 'legality') return (<CardLegality card={this.props.card} />);
     }
