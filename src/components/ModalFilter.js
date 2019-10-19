@@ -136,6 +136,7 @@ class ModalFilter extends Component {
                                     slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.9) - 60 }}
                                     layout={'default'}
                                     onSnapToItem={(index) => this.setState({ onEntry: index })}
+                                    style={{alignSelf:'center'}}
                                 />
                                 <View style={{ marginTop: 5, marginBottom: 5 }}>
                                     <Pagination
@@ -183,6 +184,7 @@ const styles = StyleSheet.create({
         borderRadius: 40,
         flexDirection: 'column',
         justifyContent: 'space-evenly',
+        alignItems: 'center',
     },
     btnContainer: {
         flexDirection: 'row',

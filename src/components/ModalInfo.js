@@ -121,6 +121,7 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height * 0.8,
         backgroundColor: '#fff', padding: 20,
         borderRadius: 40,
+        alignItems: 'center',
         flexDirection: 'column'
     },
 });
