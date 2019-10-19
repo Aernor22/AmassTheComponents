@@ -15,3 +15,14 @@ https://www.npmjs.com/package/react-native-local-mongodb
 https://www.freecodecamp.org/news/how-to-build-a-react-native-flatlist-with-realtime-searching-ability-81ad100f6699/
 https://www.npmjs.com/package/react-native-fs
 https://stackoverflow.com/questions/48747278/is-it-possible-to-get-the-binary-data-from-an-image-in-react-native
+
+show mana cost (custom font)
+show type;
+show card text
+if(types nao contem (Planeswalker)){
+    if (creature){
+        show def/power
+    }
+}else{
+    show loyality
+}
