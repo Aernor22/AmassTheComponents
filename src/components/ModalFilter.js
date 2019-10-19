@@ -137,6 +137,8 @@ class ModalFilter extends Component {
                                     layout={'default'}
                                     onSnapToItem={(index) => this.setState({ onEntry: index })}
                                     style={{alignSelf:'center'}}
+                                    enableMomentum={true}
+                                    decelerationRate={0.9}
                                 />
                                 <View style={{ marginTop: 5, marginBottom: 5 }}>
                                     <Pagination
