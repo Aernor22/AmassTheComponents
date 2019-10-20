@@ -1,31 +1,12 @@
-import React, { Component } from 'react';
-import { View, Text, Button } from 'react-native';
-import { TextInput } from 'react-native-gesture-handler';
-import { addCard } from '../layers/CRUDLayer';
+import React, { Component } from 'react'
+import { Text, View, Dimensions } from 'react-native'
 
-class ModalConfirm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: ''
-    };
-  }
-
-  handleAdd(text) {
-    var obj = JSON.parse(text);
-    addCard(obj);
-  }
-
+export default class ModalConfirm extends Component {
   render() {
     return (
       <View>
-        <Text> ModalConfirm </Text>
-        <TextInput onChangeText={(text) => this.setState({ text })} />
-        <Button title="add" onPress={() => this.handleAdd(this.state.text)}></Button>
-        
+        <Text> textInComponent </Text>
       </View>
-    );
+    )
   }
 }
-
-export default ModalConfirm;
