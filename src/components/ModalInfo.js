@@ -7,6 +7,7 @@ import CardImage from "./cards/cardsInfo/CardImage";
 import CardLegality from './cards/cardsInfo/CardLegality';
 import CardRulings from './cards/cardsInfo/CardRulings';
 import CardInfo from './cards/cardsInfo/CardInfo';
+import ModalConfirm from './ModalConfirm';
 
 export default class ModalInfo extends Component {
     constructor(props) {
@@ -15,12 +16,34 @@ export default class ModalInfo extends Component {
             card: this.props.card,
             onEntry: 0,
             entries: ['image', 'info', 'rulings', 'legality'],
+            isConfirmVisible: false,
+            isRemove: false,
+            isRemoveAll: false
         };
     }
 
     closeModal() {
         this.setState({ onEntry: 0 });
         this.props.closeModal();
+    }
+
+    closeConfirm(){
+        this.setState({isConfirmVisible: false});
+    }
+
+    closeConfirmAction(action){
+        switch(action){
+            case 'remove':
+                this.closeConfirm();
+                this.delete();
+            return;
+
+            case 'removeAll':
+                this.closeConfirm();
+                this.deleteAll();
+                this.closeModal();
+            return;
+        }
     }
 
     async delete() {
@@ -96,13 +119,19 @@ export default class ModalInfo extends Component {
                                     </View>
                                 </View>
                                 <View style={{ alignSelf: 'flex-end', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: '100%' }}>
-                                    <Button accent icon="delete" onPress={async () => await this.delete()} text="Remove 1" />
-                                    <Button accent icon="delete-forever" onPress={async () => await this.deleteAll()} text="Remove All" />
+                                    <Button accent icon="delete" onPress={()=> this.setState({action: 'remove', isConfirmVisible: true})} text="Remove 1" />
+                                    <Button accent icon="delete-forever" onPress={()=> {this.setState({action: 'removeAll', isConfirmVisible: true})}} text="Remove All" />
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
                     </TouchableOpacity>
                 </Modal>
+                <ModalConfirm 
+                    visible={this.state.isConfirmVisible}
+                    closeConfirm={()=>this.closeConfirm()} 
+                    closeConfirmAction={(action)=>{this.closeConfirmAction(action)}}
+                    action = {this.state.action}
+                    />
             </View>
         );
     }
