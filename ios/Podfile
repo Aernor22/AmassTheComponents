@@ -32,6 +32,8 @@ target 'amass' do
 
   pod 'react-native-camera', :path => '../node_modules/react-native-camera'
 
+  pod 'RNShare', :path => '../node_modules/react-native-share'
+
   target 'amassTests' do
     inherit! :search_paths
     # Pods for testing

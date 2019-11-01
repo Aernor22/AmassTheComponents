@@ -2,14 +2,13 @@
 /* eslint-disable quotes */
 import React, { Component } from "react";
 import { RNCamera } from "react-native-camera";
-import { View, StyleSheet, TouchableOpacity, Text, Dimensions, ActivityIndicator } from "react-native";
+import { View, StyleSheet, TouchableOpacity, Text, Dimensions, ActivityIndicator,ToastAndroid } from "react-native";
 import { AndroidBackHandler } from 'react-navigation-backhandler';
 import ModalLanguage from "../components/ModalLanguage";
 import ModalAddedCard from "../components/ModalAddedCard";
 import mtgApi from "../layers/MtgApiLayer";
 import ocrApi from "../layers/OCRLayer";
 import {addCard} from "../layers/CRUDLayer"
-import RNFS from 'react-native-fs';
 
 export default class Camera extends Component {
   state = {
@@ -78,7 +77,9 @@ export default class Camera extends Component {
               visible={this.state.modalAddVisible}
               cardName={this.state.cardName}
               closeModal = {this.closeAdd}
+              navigation = {this.props.navigation}
             />
+
             <View style={styles.maskOutter}>
               <View style={[{ flex: maskRowHeight }, styles.maskRow, styles.maskFrame]} />
               <View style={[{ flex: 30 }, styles.maskCenter]}>
@@ -99,6 +100,14 @@ export default class Camera extends Component {
     );
   }
 
+  buildFile = (data) => {
+    return{
+      uri: data.uri,
+	    name: 'name.jpg',
+	    type: 'image/jpg'
+    };
+  }
+
   takePicture = async () => {
     //this.setState({cardName: "Damnation", modalVisible: true});
     this.setState({ loadingVisible: true });
@@ -106,22 +115,28 @@ export default class Camera extends Component {
       const options = { quality: 0.5, base64: true};
       const data = await this.camera.takePictureAsync(options);
       var bodyFormData = new FormData();
-      //bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
-      var imageFile = await RNFS.readFile(data.uri, 'base64');
-      bodyFormData.append('image', imageFile);
+      bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
+      //var imageFile = await RNFS.readFile(data.uri, 'base64');
+      console.log(data.uri);
+      bodyFormData.append('image', this.buildFile(data));
       bodyFormData.append('isOverlayRequired', true);
       bodyFormData.append('OCREngine', 2);
       bodyFormData.append('scale', true);
+      bodyFormData.append('filetype','image/jpg');
       var response = await ocrApi.post('/image', bodyFormData,{
         headers: {
           'Content-Type': 'multipart/form-data'
         }
       });
+      console.log(response);
       if(response.data.OCRExitCode == "1"||response.data.OCRExitCode == "2"){
+        console.log(response.data.ParsedResults[0].TextOverlay.Lines[0].LineText);
         this.setState({cardName: response.data.ParsedResults[0].TextOverlay.Lines[0].LineText});
         this.setState({modalVisible:true});
+      }else{
+        ToastAndroid.show('Could not recognize text!', ToastAndroid.SHORT);
       }
-      RNFS.unlink(data.uri); // Remove image from cache
+      //RNFS.unlink(data.base64); // Remove image from cache
       this.setState({ loadingVisible: false });
     } 
   }
@@ -140,6 +155,7 @@ export default class Camera extends Component {
     })
     .catch(function (error) {
       console.log(error);
+      ToastAndroid.show('Could not retrieve card information!', ToastAndroid.SHORT);
     });
 
     this.setState({ loadingVisible: false });

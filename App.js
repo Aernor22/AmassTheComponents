@@ -17,8 +17,7 @@ const AppNavigator = createStackNavigator(
   {
     Home: Main,
     Camera: Camera,
-    Collection:Collection,
-    AddCard: ModalExport
+    Collection:Collection
   },
   {
     defaultNavigationOptions: {

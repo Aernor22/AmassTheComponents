@@ -6,3 +6,9 @@ const ocrApi = axios.create({
   });
 
 export default ocrApi;
+
+// await ocrApi.post('/image', bodyFormData,{
+//   headers: {
+//     'Content-Type': 'multipart/form-data'
+//   }
+// });

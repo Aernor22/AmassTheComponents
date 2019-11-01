@@ -2,15 +2,27 @@
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
 import { View, StyleSheet, TouchableOpacity} from "react-native";
-import {removeAll} from "../layers/CRUDLayer"
+import ModalExport from "../components/ModalExport";
+
 class Main extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {        
+        modalExportVisible: false,
+    };
+  }
+
+  closeModal(){
+    this.setState({modalExportVisible: false});
+  }
+
   render() {
     return (
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           style={[styles.FloatingButtonStyle,styles.leftFAB]}
           onPress={() => {
-            this.props.navigation.navigate('AddCard');
+            this.setState({modalExportVisible: true});
           }}
         >
           <Icon name="export2" style={styles.actionButtonIcon} />
@@ -33,6 +45,7 @@ class Main extends Component {
         >
           <Icon name="eyeo" style={styles.actionButtonIcon} />
         </TouchableOpacity>
+        <ModalExport visible={this.state.modalExportVisible} closeModal={()=>{this.closeModal()}}/>
       </View>
     );
   }
