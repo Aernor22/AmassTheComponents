@@ -34,7 +34,7 @@ class ModalExport extends Component {
               <View style={styles.modal}>
                 <View style={{ marginTop: 5, marginBottom: 5 }}>
                   <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', width: '100%' }}>
-                    <Button primary icon="file-download" onPress={async ()=> await this.export()} text="Export" />
+                    <Button primary icon="file-download" onPress={async ()=> await this.export()} text="Export" onLongPress={()=>this.props.navigation.navigate('AddCard')}/>
                     <Button primary icon="share" onPress={async ()=> await this.share()} text="Share" />
                   </View>
                 </View>
@@ -63,7 +63,9 @@ const styles = StyleSheet.create({
   },
   modal: {
     width: Dimensions.get('window').width * 0.7,
+    minWidth: 250,
     height: Dimensions.get('window').height * 0.2,
+    minHeight: 100,
     backgroundColor: '#fff', padding: 20,
     borderRadius: 40,
     flexDirection: 'column',

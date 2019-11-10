@@ -5,7 +5,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 export class CardLegality extends Component {
     render() {
         return (
-            <View style={{ height: (Dimensions.get('window').height * 0.5), padding: 20 }}>
+            <View style={{ height: (Dimensions.get('window').height * 0.5), padding: 20, minHeight: 330 }}>
                 <Text style={styles.categoriaTexto}> Legalities: </Text>
                 <ScrollView showsVerticalScrollIndicator={true}>
                     <FlatList

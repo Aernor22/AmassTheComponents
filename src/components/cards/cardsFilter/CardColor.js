@@ -165,7 +165,8 @@ const styles = StyleSheet.create({
     },
     column: {
         flexDirection: 'column',
-        width: 150,
+        width:'50%',
+        minWidth: 130,
         marginTop: 20,
     }
 });

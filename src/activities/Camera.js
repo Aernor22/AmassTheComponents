@@ -8,7 +8,8 @@ import ModalLanguage from "../components/ModalLanguage";
 import ModalAddedCard from "../components/ModalAddedCard";
 import mtgApi from "../layers/MtgApiLayer";
 import ocrApi from "../layers/OCRLayer";
-import {addCard} from "../layers/CRUDLayer"
+import {addCard} from "../layers/CRUDLayer";
+import RNFetchBlob from 'react-native-fetch-blob';
 
 export default class Camera extends Component {
   state = {
@@ -112,7 +113,7 @@ export default class Camera extends Component {
     //this.setState({cardName: "Damnation", modalVisible: true});
     this.setState({ loadingVisible: true });
     if (this.camera) {
-      const options = { quality: 0.5, base64: true};
+      const options = { quality: 0.4, base64: true};
       const data = await this.camera.takePictureAsync(options);
       var bodyFormData = new FormData();
       bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
@@ -122,12 +123,8 @@ export default class Camera extends Component {
       bodyFormData.append('isOverlayRequired', true);
       bodyFormData.append('OCREngine', 2);
       bodyFormData.append('scale', true);
-      bodyFormData.append('filetype','image/jpg');
-      var response = await ocrApi.post('/image', bodyFormData,{
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      });
+      //bodyFormData.append('filetype','image/jpg');
+      var response = await ocrApi.post('/image', bodyFormData);
       console.log(response);
       if(response.data.OCRExitCode == "1"||response.data.OCRExitCode == "2"){
         console.log(response.data.ParsedResults[0].TextOverlay.Lines[0].LineText);
@@ -136,7 +133,7 @@ export default class Camera extends Component {
       }else{
         ToastAndroid.show('Could not recognize text!', ToastAndroid.SHORT);
       }
-      //RNFS.unlink(data.base64); // Remove image from cache
+      RNFetchBlob.fs.unlink(data.uri); // Remove image from cache
       this.setState({ loadingVisible: false });
     } 
   }

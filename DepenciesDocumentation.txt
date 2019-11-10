@@ -18,3 +18,39 @@ https://stackoverflow.com/questions/48747278/is-it-possible-to-get-the-binary-da
 https://stackoverflow.com/questions/45660768/how-to-create-and-save-csv-files-in-react-native
 https://github.com/react-native-community/react-native-share
 https://stackoverflow.com/questions/45608649/share-file-with-react-native
+https://github.com/zo0r/react-native-push-notification
+
+ModalExport:
+width: Dimensions.get('window').width * 0.7,
+minWidth: 250,
+height: Dimensions.get('window').height * 0.2,
+minHeight: 100,
+
+ModalConfirm:
+minWidth: 230,
+minHeight: 100,
+width: Dimensions.get('window').width * 0.7,
+height: Dimensions.get('window').height * 0.2,
+
+ModalInfo:
+width: Dimensions.get('window').width * 0.8,
+height: Dimensions.get('window').height * 0.8,
+minWidth: 270,
+minHeight: 540,
+
+ModalFilter:
+width: Dimensions.get('window').width * 0.9,
+height: Dimensions.get('window').height * 0.7,
+minWidth: 350,
+minHeight: 450,
+
+InfoCards:
+minWidth: 230
+
+CardImage:
+height: (Dimensions.get('window').height * 0.5)
+minHeight: 330
+
+CardInfo:
+height: (Dimensions.get('window').height * 0.5)
+minHeight: 330

@@ -13,7 +13,7 @@ import CardColor from './cards/cardsFilter/CardColor';
 import CardType from './cards/cardsFilter/CardType';
 import CardRarity from './cards/cardsFilter/CardRarity';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
-import {retrieveAll, findByObject} from '../layers/CRUDLayer';
+import { retrieveAll, findByObject } from '../layers/CRUDLayer';
 
 class ModalFilter extends Component {
     constructor(props) {
@@ -38,36 +38,36 @@ class ModalFilter extends Component {
         this.props.closeModal();
     }
 
-    async cleanAndClose(){
-        this.setState({rarity: 'Any', colors: [],types: []});
+    async cleanAndClose() {
+        this.setState({ rarity: 'Any', colors: [], types: [] });
         this.props.refresh(await retrieveAll());
         this.closeModal();
     }
 
-    async searchAndClose(){
+    async searchAndClose() {
         var obj;
-        if(this.state.colors.length>0){
-            if(this.state.colors != 'Colorless'){
-                obj = {...obj, colors: { $in: this.state.colors}};
-            }else{
-                obj = {...obj, colors: []};
+        if (this.state.colors.length > 0) {
+            if (this.state.colors != 'Colorless') {
+                obj = { ...obj, colors: { $in: this.state.colors } };
+            } else {
+                obj = { ...obj, colors: [] };
             }
         }
 
-        if(this.state.types.length>0){
-            obj = {...obj, types: { $in: this.state.types}};
+        if (this.state.types.length > 0) {
+            obj = { ...obj, types: { $in: this.state.types } };
         }
 
-        if(this.state.rarity){
-            if(this.state.rarity!=='Any'){
-                obj = {...obj, rarity: this.state.rarity};
+        if (this.state.rarity) {
+            if (this.state.rarity !== 'Any') {
+                obj = { ...obj, rarity: this.state.rarity };
             }
         }
 
         console.log(obj);
         this.props.refresh(await findByObject(obj));
 
-        this.setState({rarity: 'Any', colors: [],types: []});
+        this.setState({ rarity: 'Any', colors: [], types: [] });
         this.closeModal();
     }
 
@@ -104,7 +104,7 @@ class ModalFilter extends Component {
                 for (var i = 0; i < auxType.length; i++) {
                     if (auxType[i] === type) {
                         auxType.splice(i, 1);
-                        this.setState({ types:auxType});
+                        this.setState({ types: auxType });
                     }
                 }
             }
@@ -133,10 +133,10 @@ class ModalFilter extends Component {
                                     renderItem={(item) => this._renderItem(item)}
                                     sliderWidth={(Dimensions.get('window').width * 0.9) - 40}
                                     itemWidth={(Dimensions.get('window').width * 0.9) - 60}
-                                    slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.9) - 60 }}
+                                    slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.9) - 60, minWidth: 280 }}
                                     layout={'default'}
                                     onSnapToItem={(index) => this.setState({ onEntry: index })}
-                                    style={{alignSelf:'center'}}
+                                    style={{ alignSelf: 'center' }}
                                     enableMomentum={true}
                                     decelerationRate={0.9}
                                 />
@@ -156,8 +156,8 @@ class ModalFilter extends Component {
                                     />
                                 </View>
                                 <View style={styles.btnContainer}>
-                                    <Button primary icon="filter-list" text="Filter" onPress={async () => {this.searchAndClose()}} />
-                                    <Button accent icon="clear" text="Clean" onPress={async ()=>{this.cleanAndClose()}}/>
+                                    <Button primary icon="filter-list" text="Filter" onPress={async () => { this.searchAndClose() }} />
+                                    <Button accent icon="clear" text="Clean" onPress={async () => { this.cleanAndClose() }} />
                                 </View>
                             </View>
                         </TouchableWithoutFeedback>
@@ -182,6 +182,8 @@ const styles = StyleSheet.create({
     modal: {
         width: Dimensions.get('window').width * 0.9,
         height: Dimensions.get('window').height * 0.7,
+        minWidth: 350,
+        minHeight: 450,
         backgroundColor: '#fff', padding: 20, paddingTop: 5,
         borderRadius: 40,
         flexDirection: 'column',

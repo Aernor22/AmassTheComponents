@@ -57,6 +57,8 @@ const styles = StyleSheet.create({
   modal: {
     width: Dimensions.get('window').width * 0.7,
     height: Dimensions.get('window').height * 0.2,
+    minWidth: 230,
+    minHeight: 100,
     backgroundColor: '#fff', padding: 20,
     borderRadius: 40,
     flexDirection: 'column',

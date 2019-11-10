@@ -54,7 +54,7 @@ class CardType extends Component {
                 <Text style={styles.categoriaTexto}>By Type:</Text>
                 <View style={styles.categoria}>
                     <View style={{ flexDirection: "row" }}>
-                        <View style={{ flexDirection: 'column', width: 160,marginTop: 20, marginBottom: 20, height: '70%', paddingRight: 2, justifyContent: 'space-between'}}>
+                        <View style={{ flexDirection: 'column', width: '50%', minWidth: 130, marginTop: 20, marginBottom: 20, height: '70%', paddingRight: 2, justifyContent: 'space-between'}}>
                                 <Checkbox label='Enchantment' onCheck={(checked) => { this.onCheck('Enchantment', checked) }} checked={this.state.types.enchantment} value='Enchantment'/>
                                 <Checkbox label='Instant' onCheck={(checked) => { this.onCheck('Instant', checked) }} checked={this.state.types.instant} value='Instant' />
                                 <Checkbox label='Sorcery' onCheck={(checked) => { this.onCheck('Sorcery', checked) }} checked={this.state.types.sorcery} value='Sorcery' />
@@ -76,6 +76,7 @@ export default CardType;
 const styles = StyleSheet.create({
     categoria: {
         height: Dimensions.get('window').height * 0.3,
+        minHeight: 200,
         flexDirection: 'column',
         borderColor: '#000000',
         borderWidth: 1,
@@ -91,7 +92,8 @@ const styles = StyleSheet.create({
     },
     column: {
         flexDirection: 'column',
-        width: 150, 
+        width: '50%', 
+        minWidth: 130,
         height: '70%',
         marginTop: 20,
         justifyContent: 'space-between'

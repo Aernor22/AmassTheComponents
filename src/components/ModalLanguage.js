@@ -54,7 +54,7 @@ export default class ModalLanguage extends Component {
                                         renderItem={item => this._renderItem(item)}
                                         sliderWidth={(Dimensions.get('window').width * 0.6) - 40}
                                         itemWidth={(Dimensions.get('window').width * 0.6) - 50}
-                                        slideStyle={{ borderRadius: 40, backgroundColor: '#e0e0e0', width: (Dimensions.get('window').width * 0.6) - 50 }}
+                                        slideStyle={{ borderRadius: 40, backgroundColor: '#e0e0e0', width: (Dimensions.get('window').width * 0.6)-50, minWidth: 190 }}
                                         layout={'default'}
                                         enableMomentum={true}
                                         decelerationRate={0.9}
@@ -77,7 +77,8 @@ const styles = StyleSheet.create({
     itemView:{
         justifyContent: 'center', 
         alignItems: 'center', 
-        height: ((Dimensions.get('window').height * 0.1))
+        minHeight: 50,
+        height: (Dimensions.get('window').height * 0.1)
     },
     overlay:{
         flex: 1,
@@ -89,16 +90,11 @@ const styles = StyleSheet.create({
     modal:{
         width: Dimensions.get('window').width * 0.6,
         height: Dimensions.get('window').height * 0.35,
+        minWidth:250,
+        minHeight:200,
         backgroundColor: '#fff', padding: 20,
         borderRadius: 40,
         flexDirection: 'column',
         justifyContent: 'space-evenly',
-    },
-    categoria: {
-        width: Dimensions.get('window').width * 0.5,
-        height: Dimensions.get('window').height * 0.1,
-        borderColor: '#000000',
-        borderWidth: 1,
-        borderRadius: 40,
     }
 });

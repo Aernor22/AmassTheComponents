@@ -11,13 +11,14 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import Main from "./src/activities/Main";
 import Camera from "./src/activities/Camera";
 import Collection from "./src/activities/Collection";
-import ModalExport from "./src/components/ModalExport";
+import ModalInsert from "./src/components/ModalInsert";
 
 const AppNavigator = createStackNavigator(
   {
     Home: Main,
     Camera: Camera,
-    Collection:Collection
+    Collection:Collection,
+    AddCard: ModalInsert,
   },
   {
     defaultNavigationOptions: {

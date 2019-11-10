@@ -29,7 +29,7 @@ class CardInfo extends Component {
 
     render() {
         return (
-            <View style={{ flex: 1, flexDirection: 'column', height: (Dimensions.get('window').height * 0.5), padding: 20 }}>
+            <View style={{ flex: 1, flexDirection: 'column', height: (Dimensions.get('window').height * 0.5), padding: 20, minHeight: 330 }}>
                     <Text style={styles.categoriaTexto}> Mana Cost: {this.props.card.manaCost}</Text>
                     <Text style={styles.categoriaTexto}> {this.props.card.type}</Text>
                 <ScrollView style={{marginBottom: 10}}>

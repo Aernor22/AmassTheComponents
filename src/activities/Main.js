@@ -1,7 +1,6 @@
-
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
-import { View, StyleSheet, TouchableOpacity} from "react-native";
+import { View, StyleSheet, TouchableOpacity, PermissionsAndroid, ToastAndroid} from "react-native";
 import ModalExport from "../components/ModalExport";
 
 class Main extends Component {
@@ -21,8 +20,39 @@ class Main extends Component {
       <View style={{ flex: 1 }}>
         <TouchableOpacity
           style={[styles.FloatingButtonStyle,styles.leftFAB]}
-          onPress={() => {
-            this.setState({modalExportVisible: true});
+          onPress={async () => {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+              {
+                title: 'Amass the Components',
+                message:
+                  'Amass the Components needs permission to write ' +
+                  'in your internal storage to save your cards.',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+              },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              const grantedRead = await PermissionsAndroid.request(
+                PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+                {
+                  title: 'Amass the Components',
+                  message:
+                    'Amass the Components needs permission to read ' +
+                    'from your internal storage to share your cards.',
+                  buttonNegative: 'Cancel',
+                  buttonPositive: 'OK',
+                },
+              );
+
+              if (grantedRead === PermissionsAndroid.RESULTS.GRANTED) {
+                this.setState({modalExportVisible: true});
+              } else {
+                ToastAndroid.show('Storage permission denied');
+              }
+            } else {
+              ToastAndroid.show('Storage permission denied');
+            }
           }}
         >
           <Icon name="export2" style={styles.actionButtonIcon} />
@@ -45,7 +75,7 @@ class Main extends Component {
         >
           <Icon name="eyeo" style={styles.actionButtonIcon} />
         </TouchableOpacity>
-        <ModalExport visible={this.state.modalExportVisible} closeModal={()=>{this.closeModal()}}/>
+        <ModalExport visible={this.state.modalExportVisible} closeModal={()=>{this.closeModal()}} navigation={this.props.navigation}/>
       </View>
     );
   }

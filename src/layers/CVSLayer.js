@@ -1,10 +1,10 @@
-import RNFS from 'react-native-fs';
+import RNFetchBlob from 'react-native-fetch-blob'
 import {ToastAndroid} from 'react-native';
 import Share from 'react-native-share';
 
 export function buildAndWrite(list) {
     console.log("onBUild");
-    const path = RNFS.DocumentDirectoryPath + '/collection.csv';
+    const path =  RNFetchBlob.fs.dirs.DownloadDir + '/collection.csv';
     const values = [];
 
     list.map(obj => {
@@ -16,7 +16,7 @@ export function buildAndWrite(list) {
     const rowString = values.map(d => `${d[0]},${d[1]}\n`).join('');
     const csvString = `${headerString}${rowString}`;
 
-    RNFS.writeFile(path, csvString, 'utf8')
+    RNFetchBlob.fs.writeFile(path, csvString, 'utf8')
         .then((success) => {
             console.log('FILE WRITTEN!');
             console.log(path);
@@ -30,7 +30,7 @@ export function buildAndWrite(list) {
 };
 
 export function shareAndDelete(list) {
-    const path = RNFS.DocumentDirectoryPath + '/collection.csv';
+    const path = RNFetchBlob.fs.dirs.DownloadDir + '/collection.csv';
     const values = [];
 
     list.map(obj => {
@@ -42,11 +42,11 @@ export function shareAndDelete(list) {
     const rowString = values.map(d => `${d[0]},${d[1]}\n`).join('');
     const csvString = `${headerString}${rowString}`;
 
-    RNFS.writeFile(path, csvString, 'utf8');
+    RNFetchBlob.fs.writeFile(path, csvString, 'utf8');
 
     Share.open({
         url: "file://"+ path,
     });    
 
-    RNFS.unlink(filePath);
+    RNFetchBlob.fs.unlink(filePath);
 };

@@ -94,7 +94,7 @@ export default class ModalInfo extends Component {
                                             renderItem={(item) => this._renderItem(item)}
                                             sliderWidth={(Dimensions.get('window').width * 0.6) + 20}
                                             itemWidth={(Dimensions.get('window').width * 0.6)}
-                                            slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.6) }}
+                                            slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.6), minWidth: 230 }}
                                             layout={'default'}
                                             enableMomentum={true}
                                             decelerationRate={0.9}
@@ -151,6 +151,8 @@ const styles = StyleSheet.create({
     modal: {
         width: Dimensions.get('window').width * 0.8,
         height: Dimensions.get('window').height * 0.8,
+        minWidth: 270,
+        minHeight: 540,
         backgroundColor: '#fff', padding: 20,
         borderRadius: 40,
         flexDirection: 'column'
