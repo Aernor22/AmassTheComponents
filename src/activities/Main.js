@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import Icon from "react-native-vector-icons/AntDesign";
-import { View, StyleSheet, TouchableOpacity, PermissionsAndroid, ToastAndroid} from "react-native";
+import { View, StyleSheet, TouchableOpacity, PermissionsAndroid, ToastAndroid, Image, Animated, Easing, Text} from "react-native";
 import ModalExport from "../components/ModalExport";
 
 class Main extends Component {
@@ -9,15 +9,49 @@ class Main extends Component {
     this.state = {        
         modalExportVisible: false,
     };
+    this.spinValue = new Animated.Value(0);
+    this.spin.bind(this);
   }
 
   closeModal(){
     this.setState({modalExportVisible: false});
   }
 
+  spin () {
+    this.spinValue.setValue(0);
+    Animated.timing(
+      this.spinValue,
+      {
+        toValue: 1,
+        duration: 9000,
+        easing: Easing.linear
+      }
+    ).start(() => this.spin());
+  }
+
+  componentDidMount () {
+    this.spin();
+  }
+  
   render() {
+    const spin = this.spinValue.interpolate({
+      inputRange: [0, 1],
+      outputRange: ['0deg', '360deg']
+    });
+
     return (
       <View style={{ flex: 1 }}>
+        <Text style={{fontFamily: 'Bondie Demo', fontSize: 40, alignSelf: 'center', paddingTop: 50}}>
+          amass the components
+        </Text>
+        <Image style={{position: 'absolute', top: 250, alignSelf: 'center', height: '15%', width: '30%'}}
+                    resizeMethod='auto'
+                    source={require('../resources/symbol.png')}/>
+
+        <Animated.Image style={{position: 'absolute', top: 150, alignSelf: 'center', height: '45%', width: '90%',
+        transform: [{rotate: spin}]}}
+                    resizeMethod='auto'
+                    source={require('../resources/balls.png')}/>
         <TouchableOpacity
           style={[styles.FloatingButtonStyle,styles.leftFAB]}
           onPress={async () => {
@@ -89,15 +123,15 @@ const styles = StyleSheet.create({
   },
   leftFAB:{
     bottom: 100,
-    left: 45,
+    left: 30,
   },
   centerFAB:{
     bottom: 50,
-    left: 145,
+    alignSelf: 'center',
   },
   rightFAB:{
     bottom: 100,
-    left: 245,
+    left: 300,
   },
   FloatingButtonStyle: {
     borderWidth: 1,
