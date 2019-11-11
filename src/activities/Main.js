@@ -94,8 +94,23 @@ class Main extends Component {
 
         <TouchableOpacity
           style={[styles.FloatingButtonStyle,styles.centerFAB]}
-          onPress={() => {
-            this.props.navigation.navigate('Camera');
+          onPress={ async () => {
+            const granted = await PermissionsAndroid.request(
+              PermissionsAndroid.PERMISSIONS.CAMERA,
+              {
+                title: 'Amass the Components',
+                message:
+                  'Amass the Components needs permission to write ' +
+                  'in your internal storage to save your cards.',
+                buttonNegative: 'Cancel',
+                buttonPositive: 'OK',
+              },
+            );
+            if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+              this.props.navigation.navigate('Camera');
+            }else{
+              ToastAndroid.show('Camera permissions denied');
+            }
           }}
         >
           <Icon name="camerao" style={styles.actionButtonIcon} />
