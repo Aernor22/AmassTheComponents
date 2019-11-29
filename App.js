@@ -12,7 +12,7 @@ import Main from "./src/activities/Main";
 import Camera from "./src/activities/Camera";
 import Collection from "./src/activities/Collection";
 import ModalInsert from "./src/components/ModalInsert";
-
+console.disableYellowBox = true;
 const AppNavigator = createStackNavigator(
   {
     Home: Main,

@@ -52,9 +52,9 @@ export default class ModalLanguage extends Component {
                                         ref={(c) => { this._carousel = c; }}
                                         data={this.state.entries}
                                         renderItem={item => this._renderItem(item)}
-                                        sliderWidth={(Dimensions.get('window').width * 0.6) - 40}
+                                        sliderWidth={(Dimensions.get('window').width * 0.6) - 0}
                                         itemWidth={(Dimensions.get('window').width * 0.6) - 50}
-                                        slideStyle={{ borderRadius: 40, backgroundColor: '#e0e0e0', width: (Dimensions.get('window').width * 0.6)-50, minWidth: 190 }}
+                                        slideStyle={{ borderRadius: 40, backgroundColor: '#e0e0e0', width: (Dimensions.get('window').width * 0.6)-50}}
                                         layout={'default'}
                                         enableMomentum={true}
                                         decelerationRate={0.9}

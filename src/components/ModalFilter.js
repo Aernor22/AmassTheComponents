@@ -133,7 +133,7 @@ class ModalFilter extends Component {
                                     renderItem={(item) => this._renderItem(item)}
                                     sliderWidth={(Dimensions.get('window').width * 0.9) - 40}
                                     itemWidth={(Dimensions.get('window').width * 0.9) - 60}
-                                    slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.9) - 60, minWidth: 280 }}
+                                    slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.9) - 60}}
                                     layout={'default'}
                                     onSnapToItem={(index) => this.setState({ onEntry: index })}
                                     style={{ alignSelf: 'center' }}

@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
   },
   rightFAB:{
     bottom: 100,
-    left: 300,
+    right: 30,
   },
   FloatingButtonStyle: {
     borderWidth: 1,

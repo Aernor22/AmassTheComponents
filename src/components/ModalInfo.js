@@ -94,7 +94,7 @@ export default class ModalInfo extends Component {
                                             renderItem={(item) => this._renderItem(item)}
                                             sliderWidth={(Dimensions.get('window').width * 0.6) + 20}
                                             itemWidth={(Dimensions.get('window').width * 0.6)}
-                                            slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.6), minWidth: 230 }}
+                                            slideStyle={{ justifyContent: 'center', width: (Dimensions.get('window').width * 0.6) }}
                                             layout={'default'}
                                             enableMomentum={true}
                                             decelerationRate={0.9}

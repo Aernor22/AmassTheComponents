@@ -112,26 +112,35 @@ export default class Camera extends Component {
   takePicture = async () => {
     //this.setState({cardName: "Damnation", modalVisible: true});
     this.setState({ loadingVisible: true });
+    // setTimeout(() => { 
+    //   this.setState({cardName: "Artificer's Hex", modalVisible: true});
+    //   this.setState({ loadingVisible: false });
+    // }, 0.5);
+
     if (this.camera) {
-      const options = { quality: 0.4, base64: true};
+      const options = {quality: 0.3};
       const data = await this.camera.takePictureAsync(options);
       var bodyFormData = new FormData();
-      bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
-      //var imageFile = await RNFS.readFile(data.uri, 'base64');
+      //bodyFormData.append('base64Image', 'data:image/png;base64,' + data.base64);
+      //var imageFile = await RNFetchBlob.fs.readFile(data.uri, 'base64');
       console.log(data.uri);
-      bodyFormData.append('image', this.buildFile(data));
+      bodyFormData.append('file', this.buildFile(data));
       bodyFormData.append('isOverlayRequired', true);
       bodyFormData.append('OCREngine', 2);
       bodyFormData.append('scale', true);
-      //bodyFormData.append('filetype','image/jpg');
+      bodyFormData.append('filetype','image/jpg');
       var response = await ocrApi.post('/image', bodyFormData);
       console.log(response);
-      if(response.data.OCRExitCode == "1"||response.data.OCRExitCode == "2"){
-        console.log(response.data.ParsedResults[0].TextOverlay.Lines[0].LineText);
-        this.setState({cardName: response.data.ParsedResults[0].TextOverlay.Lines[0].LineText});
-        this.setState({modalVisible:true});
+      if(response.status === 403){
+        ToastAndroid.show('Time out! Could not reach server.', ToastAndroid.SHORT);
       }else{
-        ToastAndroid.show('Could not recognize text!', ToastAndroid.SHORT);
+        if(response.data.OCRExitCode == "1"||response.data.OCRExitCode == "2"){
+            console.log(response.data.ParsedResults[0].TextOverlay.Lines[0].LineText);
+            this.setState({cardName: response.data.ParsedResults[0].TextOverlay.Lines[0].LineText});
+            this.setState({modalVisible:true});
+        }else{
+          ToastAndroid.show('Could not recognize text!', ToastAndroid.SHORT);
+        }
       }
       RNFetchBlob.fs.unlink(data.uri); // Remove image from cache
       this.setState({ loadingVisible: false });
